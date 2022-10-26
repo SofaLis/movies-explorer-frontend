@@ -1,0 +1,133 @@
+.project__description {
+    margin: 70px auto 110px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 550px);
+    justify-content: space-around;
+    gap: 40px;
+}
+
+.project__title {
+    margin: 0;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.04em;
+}
+
+.project__text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    margin: 26px 0 0;
+}
+
+.project__zone {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.project__front {
+    width: 228px;
+    text-align: center;
+}
+
+.project__back {
+    width: 912px;
+    text-align: center;
+}
+
+.project__date {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+}
+
+.project__date_front {
+    background-color: #2BE080;
+}
+
+.project__date_back {
+    background-color: #F2F2F2;
+}
+
+.project__name {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #A0A0A0;
+    padding-top: 14px;
+    margin: 0;
+}
+
+@media screen and (max-width: 1279px) {
+    .project__description {
+        margin: 70px auto 93px;
+        grid-template-columns: repeat(auto-fit, 319px);
+        gap: 30px;
+    }
+
+    .project__text {
+        font-size: 12px;
+        line-height: 18px;
+        margin: 22px 0 0;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .project__front {
+        width: 140px;
+    }
+    .project__back {
+        width: 528px;
+    }
+}
+
+@media screen and (max-width:767px) {
+    .project__description {
+        margin: 60px auto;
+        grid-template-columns: repeat(auto-fit, 284px);
+        gap: 56px;
+    }
+
+    .project__title {
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .project__title {
+        font-size: 18px;
+        line-height: 22px;
+    }
+
+    .project__text {
+        font-size: 11px;
+        line-height: 16px;
+        margin: 16px 0 0;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .project__front {
+        width: 100px;
+    }
+
+    .project__back {
+        width: 184px;
+    }
+
+    .project__date {
+        font-size: 11px;
+        line-height: 13px;
+    }
+
+    .project__name {
+        font-size: 11px;
+        line-height: 13px;
+        padding-top: 10px;
+    }
+}

@@ -1,0 +1,33 @@
+.promo {  
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.promo__title {
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    text-align: center;
+    width: calc(100% - (235px*2));
+    letter-spacing: -0.04em;
+    margin: 160px auto 150px;
+}
+
+@media screen and (max-width: 924px) {
+    .promo__title {
+        width: calc(100% - (24px*2));
+        margin: 350px auto 315px;
+        font-size: 40px;
+        line-height: 52px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .promo__title {
+        width: 100%;
+        margin: 220px auto 212px;
+        font-size: 29px;
+        line-height: 37px;
+    }
+}
