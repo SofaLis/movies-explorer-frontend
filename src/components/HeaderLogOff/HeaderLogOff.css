@@ -23,12 +23,8 @@
 .header__button {
     background-color: #2BE080;
     border-radius: 3px;
-    border: none;
     height: 32px;
     width: 76px;
-    padding: 0;
-    transition: opacity 0.5s;
-    cursor: pointer;
 }
 
 @media screen and (max-width: 900px) {

@@ -10,7 +10,7 @@ export default function HeaderLogOff(props) {
                     Регистрация
                 </Link>
                 <Link className="header__link" to="/signin" >
-                    <button className="header__button">
+                    <button className="button header__button">
                         Войти
                     </button>
                 </Link>

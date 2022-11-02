@@ -22,7 +22,7 @@ export default function HeaderLogIn() {
                     </div>
                 </Link>
             </div>
-            <button className="header__button-nav" ></button>
+            <button className="button header__button-nav" ></button>
         </>
     );
 }

@@ -31,11 +31,6 @@
     border-bottom: none;
 }
 
-.portfolio__link {
-    text-decoration: none;
-    color: black;
-}
-
 .portfolio__container {
     display: flex;
     justify-content: space-between;

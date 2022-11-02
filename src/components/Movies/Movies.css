@@ -1,0 +1,16 @@
+.movies {
+    width: calc(100% - (70px*2));
+    margin: 80px auto;
+}
+
+@media screen and (max-width: 850px) {
+    .main__baner {
+        width: calc(100% - (30px*2));
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .main__baner {
+        width: calc(100% - (10px*2));
+    }
+}
