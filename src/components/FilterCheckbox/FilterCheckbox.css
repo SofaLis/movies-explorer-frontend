@@ -1,0 +1,48 @@
+.checkbox {
+    padding: 28px 0 39px;
+    border-bottom: 1px solid #E8E8E8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox__container {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.checkbox__input {
+    width: 36px;
+    height: 20px;
+    background-image: url(../../images/checkbocks_on.svg);
+    transition: all 0.5s ease;
+}
+
+.isSelected {
+    background-image: url(../../images/checkbocks_off.svg);
+    transition: all 0.5s ease;
+}
+
+.checkbox__text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+}
+
+@media screen and (max-width: 850px) {
+    .checkbox {
+        padding: 40px 0;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .checkbox {
+        padding-top: 46px;
+    }
+
+    .checkbox__text {
+        font-size: 11px;
+    }
+}

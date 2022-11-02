@@ -4,13 +4,13 @@
 }
 
 @media screen and (max-width: 850px) {
-    .main__baner {
+    .movies {
         width: calc(100% - (30px*2));
     }
 }
 
 @media screen and (max-width: 450px) {
-    .main__baner {
+    .movies {
         width: calc(100% - (10px*2));
     }
 }

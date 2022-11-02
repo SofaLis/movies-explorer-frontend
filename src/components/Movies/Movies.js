@@ -1,7 +1,6 @@
 import React from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
-import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import MoviesCard from '../MoviesCard/MoviesCard';
@@ -24,6 +23,7 @@ export default function Movies(props) {
         <>
             <Header  isLoggedIn={props.isLoggedIn} />
             <section className="movies">
+                <SearchForm />
             </section>
             <Footer />
         </>
