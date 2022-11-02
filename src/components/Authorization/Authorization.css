@@ -1,0 +1,124 @@
+.authorization {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.authorization__container {
+    height: calc(100% - (70px*2));
+    width: calc(100% - (442px*2));
+    margin: 70px auto;
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+}
+
+.authorization__link {
+    text-decoration: none;
+    color: #FF6838;
+    transition: opacity 0.5s;
+    opacity: 1;
+}
+
+.authorization__link_text {
+    padding-left: 6px;
+}
+
+.authorization__link:hover {
+    opacity: 0.5;
+}
+
+.authorization__title {
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 29px;
+    margin: 40px 0;
+}
+
+.authorizatio__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 413px;
+}
+
+.authorizatio__caption {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #A0A0A0;
+    padding: 0 0 5px;
+}
+
+.authorizatio__input {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    border: none;
+    border-bottom: 1px solid #E8E8E8;
+    padding: 0 0 10px;
+    margin: 0 0 24px;
+    color: black;
+    width: 100%;
+}
+
+.authorizatio__input-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.authorizatio__dox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.authorizatio__button {
+    width: 100%;
+    height: 45px;
+    background-color: #FF6838;
+    color: #FFFFFF;
+    border-radius: 3px;
+    border: none;
+    transition: opacity 0.5s;
+    opacity: 1;
+    cursor: pointer;
+}
+
+.authorizatio__button:hover {
+    opacity: 0.5;
+}
+
+.authorization__text {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #A0A0A0;
+}
+
+@media screen and (max-width: 1279px) {
+    .authorization__container {
+        height: calc(100% - (232px*2));
+        width: calc(100% - (186px*2));
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .authorization__container {
+        height: calc(100% - 56px - 30px);
+        width: calc(100% - (30px*2));
+        margin: 56px auto 30px;
+        align-items: center;
+    }
+
+    .authorization__title {
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 29px;
+        margin: 50px 0 80px;
+    }
+
+    .authorizatio__form {
+        min-height: 493px;
+    }
+}
