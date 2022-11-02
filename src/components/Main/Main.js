@@ -7,10 +7,12 @@ import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Footer from '../Footer/Footer';
+import Header from '../Header/Header';
 
-export default function Main() {
+export default function Main(props) {
     return (
         <main className="main">
+            <Header isLoggedIn={props.isLoggedIn} />
             <div className="main__baner">
                 <Promo />
                 <NavTab />
