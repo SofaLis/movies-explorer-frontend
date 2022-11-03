@@ -57,9 +57,13 @@
     border: none;
     border-bottom: 1px solid #E8E8E8;
     padding: 0 0 10px;
-    margin: 0 0 24px;
+    margin: 0;
     color: black;
     width: 100%;
+}
+
+.authorizatio__input_active {
+    color: #EE3465;
 }
 
 .authorizatio__input-list {
@@ -83,6 +87,9 @@
     transition: opacity 0.5s;
     opacity: 1;
     cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
 }
 
 .authorizatio__button:hover {
@@ -94,6 +101,23 @@
     font-size: 14px;
     line-height: 17px;
     color: #A0A0A0;
+}
+
+.authorizatio_err {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+    display: none;
+    padding-top: 6px;
+}
+
+.authorizatio__input-container {
+    margin: 0 0 24px;
+}
+
+.authorizatio_err_active {
+    display: flex;
 }
 
 @media screen and (max-width: 1279px) {
@@ -120,5 +144,10 @@
 
     .authorizatio__form {
         min-height: 493px;
+    }
+
+    .authorization__text {
+        font-size: 12px;
+        line-height: 15px;
     }
 }

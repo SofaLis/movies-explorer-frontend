@@ -25,8 +25,8 @@ export default function Register(props) {
     }
 
   return (
-      <Authorization formName="register" title="Добро пожаловать!" buttonText="Войти" 
-      text="Ещё не зарегистрированы?" linkText="Регистрация" link="/signin" nameAuth="register"
+      <Authorization formName="register" title="Добро пожаловать!" buttonText="Регистрация" 
+      text="Уже зарегистрированы?" linkText="Войти" link="/signin" nameAuth="register"
       onSubmit={handleSubmit} handleChangeName={handleChangeName} handleChangeEmail={handleChangeEmail}
       handleChangePassword={handleChangePassword} />
   )

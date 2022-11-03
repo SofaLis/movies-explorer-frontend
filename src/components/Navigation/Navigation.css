@@ -92,9 +92,23 @@
     height: 11px;
 }
 
-@media screen and (max-width: 500px) {
+.navigation__link_active {
+    padding-bottom: 4px;
+    border-bottom: 2px solid black;
+}
+
+@media screen and (max-width: 558px) {
     .navigation__container {
         width: 100%;
         margin: 0;
+    }
+
+    .navigation__close {
+        top: 20px;
+        right: 20px;
+    }
+
+    .navigation__container-link {
+        padding: 144px 10px 47px;
     }
 }

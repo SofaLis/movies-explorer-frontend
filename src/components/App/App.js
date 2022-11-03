@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 
 import './App.css';
 import Main from '../Main/Main';
@@ -13,35 +13,48 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
-  const history = useNavigate();
+  const history = useHistory();
 
   function handleLogIn(email, password) {
     setIsLoggedIn(true);
-    history('/');
+    history.push('/');
   }
 
   function handleRegister(name, email, password) {
     setIsLoggedIn(true);
-    history('/');
+    history.push('/');
   }
 
   function handleLogOff(name, email, password) {
     setIsLoggedIn(false);
-    history('/');
+    history.push('/');
   }
 
   return (
     <div className="page">
-      <Routes>
-        <Route path="/" element={<Main isLoggedIn={isLoggedIn} />} />
-        <Route path="/movies" element={<Movies isLoggedIn={isLoggedIn} />} />
-        <Route path="/signup" element={<Register onRegister={handleRegister} />} />
-        <Route path="/signin" element={<Login onRegister={handleLogIn} />} />
-        <Route path="/profile" element={<Profile onRegister={handleLogIn} onClick={handleLogOff}
-        isLoggedIn={isLoggedIn} />} />
-        <Route path="/saved-movies" element={<SavedMovies isLoggedIn={isLoggedIn} />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      <Switch>
+        <Route exact path="/">
+          <Main isLoggedIn={isLoggedIn} />
+        </Route>
+        <Route path="/movies">
+          <Movies isLoggedIn={isLoggedIn} />
+        </Route>
+        <Route path="/signup">
+          <Register onRegister={handleRegister} />
+        </Route>
+        <Route path="/signin">
+          <Login onRegister={handleLogIn} />
+        </Route>
+        <Route path="/profile">
+          <Profile onRegister={handleLogIn} onClick={handleLogOff} isLoggedIn={isLoggedIn} />
+        </Route>
+        <Route path="/saved-movies">
+          <SavedMovies isLoggedIn={isLoggedIn} />
+        </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
+      </Switch>
     </div>
   );
 }
