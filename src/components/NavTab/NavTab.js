@@ -3,11 +3,11 @@ import './NavTab.css';
 
 export default function Promo() {
     return (
-        <section className="navigation">
-            <ul className="navigation__list">
-                <li className="navigation__item"><a href="#project" className="navigation__item_link">О проекте</a></li>
-                <li className="navigation__item"><a href="#techs" className="navigation__item_link" >Технологии</a></li>
-                <li className="navigation__item"><a href="#me" className="navigation__item_link">Студент</a></li>
+        <section className="nav-tab">
+            <ul className="nav-tab__list">
+                <li className="nav-tab__item"><a href="#project" className="link">О проекте</a></li>
+                <li className="nav-tab__item"><a href="#techs" className="link" >Технологии</a></li>
+                <li className="nav-tab__item"><a href="#me" className="link">Студент</a></li>
             </ul>
         </section >
     );

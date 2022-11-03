@@ -1,39 +1,33 @@
 import React from 'react';
 import './Navigation.css';
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import akkaunt from '../../images/akkaunt.svg';
 
 export default function Navigation(props) {
     return (
         <div className={props.isOpen ? `navigation navigation_active` : `navigation`}>
             <div className="navigation__container">
-                <button className="navigation__close" onClick={props.onClick}></button>
+                <button className="button navigation__close" onClick={props.onClick}></button>
                 <div className="navigation__container-link">
-                    <ul className="navigation__list">
-                        <li className="navigation__item">
-                            <Link className="navigation__link" to="/movies">
+                    <nav className="navigation__list">
+                            <NavLink exact to="/" className="link navigation__link" activeClassName="navigation__link_active">
                                 Главная
-                            </Link>
-                        </li>
-                        <li className="navigation__item">
-                            <Link className="navigation__link" to="/saved-movies">
+                            </NavLink>
+                            <NavLink className="link navigation__link" to="/movies" activeClassName="navigation__link_active">
                                 Фильмы
-                            </Link>
-                        </li>
-                        <li className="navigation__item">
-                            <Link className="navigation__link" to="/saved-movies">
+                            </NavLink>
+                            <NavLink className="link navigation__link" to="/saved-movies" activeClassName="navigation__link_active">
                                 Сохранённые фильмы
-                            </Link>
-                        </li>
-                    </ul>
-                    <Link className="navigation__item navigation__akkaunt" to="/profile" >
+                            </NavLink>
+                    </nav>
+                    <NavLink className="link navigation__akkaunt" to="/profile" activeClassName="navigation__link_active">
                         <p className="navigation__text">Аккаунт</p>
                         <div className="navigation__img-container">
                             <div className="navigation__img-container">
                                 <img src={akkaunt} className="navigation__img" alt="лого" />
                             </div>
                         </div>
-                    </Link>
+                    </NavLink>
                 </div>
             </div>
         </div>

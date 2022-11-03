@@ -1,6 +1,5 @@
 import React from 'react';
 import './SearchForm.css';
-import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 
 export default function SearchForm(props) {
     return (
@@ -10,7 +9,6 @@ export default function SearchForm(props) {
                 id="search-form" name="search-form" />
                 <button className="button search-form__button"></button>
             </div>
-            <FilterCheckbox />
         </form>
     );
 }

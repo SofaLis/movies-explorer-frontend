@@ -8,41 +8,48 @@
 
 .checkbox__container {
     display: flex;
-    gap: 12px;
     align-items: center;
-    justify-content: center;
 }
 
-.checkbox__input {
+.checkbox__caption {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    padding: 0 0 0 12px;
+    margin: 0;
+}
+
+.checkbox__item {
     width: 36px;
     height: 20px;
-    background-image: url(../../images/checkbocks_on.svg);
+    border: none;
+    padding: 0;
+    margin: 0 auto;
+    background: none;
+    cursor: pointer;
+    background-image: url('../../images/checkbocks_on.svg');
     transition: all 0.5s ease;
 }
 
 .isSelected {
-    background-image: url(../../images/checkbocks_off.svg);
     transition: all 0.5s ease;
+    background-image: url('../../images/checkbocks_off.svg');
 }
 
-.checkbox__text {
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
-}
-
-@media screen and (max-width: 850px) {
+@media screen and (max-width: 970px) {
     .checkbox {
-        padding: 40px 0;
+        padding: 40px 0 39px;
     }
+    
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 767px) {
     .checkbox {
-        padding-top: 46px;
+        padding: 46px 0 39px;
     }
 
-    .checkbox__text {
+    .checkbox__caption {
         font-size: 11px;
+        padding: 0 0 0 12px;
     }
 }

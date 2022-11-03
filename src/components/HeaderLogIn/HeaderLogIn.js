@@ -3,7 +3,7 @@ import './HeaderLogIn.css';
 import { Link } from "react-router-dom";
 import akkaunt from '../../images/akkaunt.svg';
 
-export default function HeaderLogIn() {
+export default function HeaderLogIn(props) {
     return (
         <>
             <div className="header__logon">
@@ -22,7 +22,7 @@ export default function HeaderLogIn() {
                     </div>
                 </Link>
             </div>
-            <button className="button header__button-nav" ></button>
+            <button className="button header__button-nav" onClick={props.onClick}></button>
         </>
     );
 }

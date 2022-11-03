@@ -1,19 +1,20 @@
-import { useCallback, useState } from "react";
-import React from 'react';
+import React from "react";
 import './FilterCheckbox.css';
+import { useCallback, useState } from "react";
 
+export default function FilterCheckbox() {
 
-export default function FilterCheckbox(props) {
+    const [isSelectedShortMovie, setIsSelectedIsShortMovie] = useState(false);
+    const onSelectShortMovie = useCallback(
+        () => setIsSelectedIsShortMovie(!isSelectedShortMovie),
+        [isSelectedShortMovie]
+    );
 
-    const [isShort, setIsShort] = useState(false);
-    function onSelectShort () {
-        isShort ? setIsShort(false) : setIsShort(true);
-    }
     return (
         <div className="checkbox">
             <div className="checkbox__container">
-                <div className={`checkbox__input ${isShort ? "isSelected" : ""}`} onClick={onSelectShort} />
-                <p className="checkbox__text">Короткометражки</p>
+                <button tipe="button" className={`checkbox__item ${isSelectedShortMovie ? "isSelected" : ""}`} onClick={onSelectShortMovie} />
+                <p className="checkbox__caption">Короткометражки</p>
             </div>
         </div>
     );

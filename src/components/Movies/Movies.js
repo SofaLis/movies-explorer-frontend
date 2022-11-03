@@ -1,6 +1,7 @@
 import React from 'react';
 import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
+import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
 import MoviesCard from '../MoviesCard/MoviesCard';
@@ -24,6 +25,21 @@ export default function Movies(props) {
             <Header  isLoggedIn={props.isLoggedIn} />
             <section className="movies">
                 <SearchForm />
+                <FilterCheckbox />
+                <MoviesCardList>
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film1} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film2} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film3} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film4} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film5} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film6} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film7} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film8} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film9} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film10} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film11} />
+                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film12} />
+                </MoviesCardList>
             </section>
             <Footer />
         </>

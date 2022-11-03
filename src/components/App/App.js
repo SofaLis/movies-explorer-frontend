@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import './App.css';
 import Main from '../Main/Main';
@@ -13,17 +13,21 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 function App() {
 
   const [isLoggedIn, setIsLoggedIn] = React.useState(true);
+  const history = useNavigate();
 
   function handleLogIn(email, password) {
     setIsLoggedIn(true);
+    history('/');
   }
 
   function handleRegister(name, email, password) {
     setIsLoggedIn(true);
+    history('/');
   }
 
   function handleLogOff(name, email, password) {
     setIsLoggedIn(false);
+    history('/');
   }
 
   return (
