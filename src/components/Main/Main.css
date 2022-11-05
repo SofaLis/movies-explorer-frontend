@@ -1,0 +1,19 @@
+.main__baner {
+    background-color: #F5F5F5;
+    border-radius: 10px;
+    width: calc(100% - (40px*2));
+    margin: 20px auto 0;
+}
+
+@media screen and (max-width: 850px) {
+    .main__baner {
+        width: calc(100% - (20px*2));
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .main__baner {
+        width: calc(100% - (14px*2));
+        margin-top: 14px;
+    }
+}

@@ -1,0 +1,114 @@
+.navigation {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    box-sizing: border-box;
+    top: 0;
+    display: none;
+}
+
+.navigation_active {
+    display: flex;
+}
+
+.navigation__container {
+    width: 70%;
+    margin: 0 0 0 30%;
+    position: relative;
+    overflow: auto; 
+    top: 0;
+    height: 100%;
+    background-color: white;
+    opacity: 1;
+    box-sizing: border-box;
+}
+
+.navigation__close {
+    width: 22px;
+    height: 22px;
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background-image: url(../../images/close.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.navigation__container-link {
+    padding: 160px 90px 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.navigation__list {
+    display: flex;
+    gap: 26px;
+    flex-direction: column;
+    align-items: center;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navigation__link {
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+}
+
+.navigation__akkaunt {
+    text-decoration: none;
+    color: black;
+    display: flex;
+    align-items: center;
+    padding: 620px 0 0 0;
+    margin: 0;
+    gap: 13px;
+}
+
+
+.navigation__text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.navigation__img-container {
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    background-color: #F9F9F9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navigation__img {
+    width: 11px;
+    height: 11px;
+}
+
+.navigation__link_active {
+    padding-bottom: 4px;
+    border-bottom: 2px solid black;
+}
+
+@media screen and (max-width: 558px) {
+    .navigation__container {
+        width: 100%;
+        margin: 0;
+    }
+
+    .navigation__close {
+        top: 20px;
+        right: 20px;
+    }
+
+    .navigation__container-link {
+        padding: 144px 10px 47px;
+    }
+}
