@@ -7,7 +7,8 @@ export default function Portfolio() {
             <h3 className="portfolio__title">Портфолио</h3>
             <ul className="portfolio__list">
                 <li className="portfolio__item">
-                    <a className="link portfolio__link" href="https://github.com/SofaLis/how-to-learn-main">
+                    <a className="link portfolio__link" href="https://github.com/SofaLis/how-to-learn-main"
+                        target="_blank" rel="noreferrer">
                         <div className="portfolio__container">
                             <p className="portfolio__text">Статичный сайт</p>
                             <p className="portfolio__text portfolio__text_arrow">↗</p>
@@ -15,7 +16,8 @@ export default function Portfolio() {
                     </a>
                 </li>
                 <li className="portfolio__item">
-                    <a className="link portfolio__link" href="https://github.com/SofaLis/three_project">
+                    <a className="link portfolio__link" href="https://github.com/SofaLis/three_project"
+                        target="_blank" rel="noreferrer">
                         <div className="portfolio__container">
                             <p className="portfolio__text">Адаптивный сайт</p>
                             <p className="portfolio__text portfolio__text_arrow">↗</p>
@@ -23,7 +25,8 @@ export default function Portfolio() {
                     </a>
                 </li>
                 <li className="portfolio__item">
-                    <a className="link portfolio__link" href="https://github.com/SofaLis/react-mesto-api-full">
+                    <a className="link portfolio__link" href="https://github.com/SofaLis/react-mesto-api-full"
+                        target="_blank" rel="noreferrer">
                         <div className="portfolio__container">
                             <p className="portfolio__text">Одностраничное приложение</p>
                             <p className="portfolio__text portfolio__text_arrow">↗</p>

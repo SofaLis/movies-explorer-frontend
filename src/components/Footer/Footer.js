@@ -10,10 +10,16 @@ export default function Footer() {
                     <p className="footer__text">© 2021</p>
                     <ul className="footer__list">
                         <li className="footer__text">
-                            <a className="link footer__link" href="https://practicum.yandex.ru">Яндекс.Практикум</a>
+                            <a className="link footer__link" href="https://practicum.yandex.ru"
+                                target="_blank" rel="noreferrer">
+                                Яндекс.Практикум
+                            </a>
                         </li>
                         <li className="footer__text">
-                            <a className="link footer__link" href="https://github.com">Github</a>
+                            <a className="link footer__link" href="https://github.com"
+                                target="_blank" rel="noreferrer">
+                                Github
+                            </a>
                         </li>
                     </ul>
                 </div>

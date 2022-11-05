@@ -15,7 +15,8 @@ export default function AboutMe() {
                         там же поступила в СПБГУАП по специальности электронника и наноэлекронника.
                         Стараюсь совмещать получение высшего образования и освоение более интересной для меня профессии - веб разработка.
                     </p>
-                    <a className="link me__link" href="https://github.com/SofaLis">Github</a>
+                    <a className="link me__link" href="https://github.com/SofaLis"
+                        target="_blank" rel="noreferrer">Github</a>
                 </div>
                 <img className="me__img" src={img} alt="Это я" />
             </div>
