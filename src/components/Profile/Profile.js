@@ -1,13 +1,11 @@
 import React from 'react';
 import Header from '../Header/Header';
 import './Profile.css';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 export default function Profile(props) {
 
-    const currentUser = {
-        'name': 'Софа',
-        'email': 'Lisichka@gmail.com'
-    };
+    const currentUser = React.useContext(CurrentUserContext);
 
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
@@ -25,10 +23,9 @@ export default function Profile(props) {
         props.onRegister(name, email);
     }
 
-
     return (
         <>
-            <Header  isLoggedIn={props.isLoggedIn} />
+            <Header isLoggedIn={props.isLoggedIn} />
             <section className='profile'>
                 <h2 className="profile__title">{`Привет, ${currentUser.name}!`}</h2>
                 <form name="profile" className="profile__container" onSubmit={handleSubmit}>
@@ -36,15 +33,15 @@ export default function Profile(props) {
                         <div className="profile__input-container">
                             <span className="profile__caption">Имя</span>
                             <input className="profile__input" type="text" id="name" name="name"
-                                required minLength="2" maxLength="40" onChange={handleChangeName} value={currentUser.name || name} />
+                                required minLength="2" maxLength="40" onChange={handleChangeName} value={currentUser.name || ''} />
                         </div>
                         <div className="profile__input-container">
                             <span className="profile__caption">E-mail</span>
                             <input className="profile__input" type="email" id="email" name="email"
-                                required onChange={handleChangeEmail} value={currentUser.email || email} />
+                                required onChange={handleChangeEmail} value={currentUser.email || ''} />
                         </div>
                     </div>
-                    <button type="submit" className="profile__button profile__button_submit">
+                    <button type="submit" className="profile__button profile__button_submit" onClick={props.onClickUpdate}>
                         Редактировать
                     </button>
                     <button type="button" className="profile__button profile__button_logoff" onClick={props.onClick}>
