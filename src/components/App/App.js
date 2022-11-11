@@ -12,14 +12,25 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 
 import * as auth from '../../utils/auth';
 import api from '../../utils/MainApi.js';
+import apiMov from '../../utils/MoviesApi';
 import ProtectedRoute from '../../utils/ProtectedRoute';
 
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 function App() {
-
+  //проверка на авторизацию
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  //данные пользователя
   const [currentUser, setCurrentUser] = React.useState({});
+  //карточки которые должны быть загружены из стороннего апи
+  const [movieList, setMovieList] = React.useState([]);
+  const [isMovie, setIsMovie] = React.useState([]);
+  //изменяем статус лайка 
+  const [isLike, setIsLike] = React.useState(false);
+  //Загрузка для плеодера
+  const [isLoad, setIsLoad] = React.useState(false);
+  //не уверена, что заработает, но должно
+  const [isSearch, setIsSearch] = React.useState('');
   const history = useHistory();
 
   React.useEffect(() => {
@@ -30,7 +41,7 @@ function App() {
         setCurrentUser(user);
       })
       .catch((err) => {
-        history.push("/signin");
+        history.push("/");
         setIsLoggedIn(false);
         console.log(err)
       });
@@ -47,6 +58,15 @@ function App() {
       })
   }, [isLoggedIn, history]);
 
+  React.useEffect(() => {
+    apiMov.getMovies()
+      .then((movies) => {
+        setIsMovie(movies)
+      })
+  }, [isMovie]);
+
+
+  //ПОЛЯ АВТОРИЗАЦИИ
   function handleLogIn(email, password) {
     auth.authorize(email, password)
       .then((res) => {
@@ -93,6 +113,24 @@ function App() {
       .catch((err) => console.log(err));
   }
 
+  function handleCardLike(movie) {
+    console.log(movie.id)
+    api.like(movie)
+      .then((res) => {
+        setIsLike(true)
+      })
+      .catch((err) => console.log(err));
+  }
+
+  function handleCardDislike(movie) {
+    api.deleteMovie(movie.id)
+      .then((res) => {
+        setIsLike(false)
+        console.log(movie.id)
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -102,10 +140,11 @@ function App() {
             <Main isLoggedIn={isLoggedIn} />
           </Route>
 
-          <ProtectedRoute path="/movies" component={Movies} isLoggedIn={isLoggedIn} />
+          <ProtectedRoute path="/movies" component={Movies} isLoggedIn={isLoggedIn}
+          movies={isMovie} onCardLike={handleCardLike} isLike={isLike} onCardDislike={handleCardDislike} />
 
           <ProtectedRoute path="/profile" component={Profile} isLoggedIn={isLoggedIn} onClickUpdate={handleSetUser}
-          onRegister={handleLogIn} onClick={handleLogOff} />
+            onRegister={handleLogIn} onClick={handleLogOff} />
 
           <ProtectedRoute path="/saved-movies" component={SavedMovies} isLoggedIn={isLoggedIn} />
 
@@ -120,7 +159,7 @@ function App() {
           <Route path="*">
             <NotFound />
           </Route>
-          
+
         </Switch>
       </div>
     </CurrentUserContext.Provider>

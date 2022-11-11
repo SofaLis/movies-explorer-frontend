@@ -1,8 +1,12 @@
 .card {
     margin: auto;
     width: 270px;
-    display: flex;
     flex-direction: column;
+    display: none;
+}
+
+.card_visible {
+    display: flex;
 }
 
 .card__img {

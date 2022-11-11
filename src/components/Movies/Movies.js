@@ -4,42 +4,48 @@ import SearchForm from '../SearchForm/SearchForm';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-import MoviesCard from '../MoviesCard/MoviesCard';
-import film1 from '../../images/film1.png';
-import film2 from '../../images/film2.png';
-import film3 from '../../images/film3.png';
-import film4 from '../../images/film4.png';
-import film5 from '../../images/film5.png';
-import film6 from '../../images/film6.png';
-import film7 from '../../images/film7.png';
-import film8 from '../../images/film8.png';
-import film9 from '../../images/film9.png';
-import film10 from '../../images/film10.png';
-import film11 from '../../images/film11.png';
-import film12 from '../../images/film12.png';
 import Header from '../Header/Header';
+import Preloader from "../Preloader/Preloader";
+import { useState } from "react";
 
 export default function Movies(props) {
+    const [isErr, setIsErr] = React.useState(false);
+    const [isSelectedShortMovie, setIsSelectedIsShortMovie] = useState(false);
+
+    function handleSubmit(e) {
+        e.preventDefault();
+        props.setIsLoading(true);
+        props.search ? props.onClick(false) : setIsErr(true);
+    }
+
+    function handleChangeSearchForm(e) {
+        setIsErr(false);
+    }
+
+    function handleChangeShortMovie () {
+        if (isSelectedShortMovie) {
+            setIsSelectedIsShortMovie(false)
+        } else {
+            setIsSelectedIsShortMovie(true)
+        }
+
+    }
+
+    const seeMovies = isSelectedShortMovie ? props.movies.filter((film) => film.duration < 40) : props.movies;
+
     return (
         <>
-            <Header  isLoggedIn={props.isLoggedIn} />
+            <Header isLoggedIn={props.isLoggedIn} />
             <section className="movies">
-                <SearchForm />
-                <FilterCheckbox />
-                <MoviesCardList>
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film1} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film2} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film3} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film4} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film5} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film6} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film7} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film8} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film9} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film10} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film11} />
-                    <MoviesCard name="33 слова о дизайне" time="1ч 42м" img={film12} />
-                </MoviesCardList>
+                <SearchForm isErr={isErr} onChange={handleChangeSearchForm} onSubmit={handleSubmit} />
+                <FilterCheckbox onSelectShortMovie={handleChangeShortMovie} isSelectedShortMovie={isSelectedShortMovie} />
+                {props.isLoading ?
+                    <Preloader /> :
+                    <MoviesCardList movies={seeMovies} onCardLike={props.onCardLike}
+                    isLike={props.isLike} 
+                    onCardDislike={props.onCardDislike}
+                    />
+                }
             </section>
             <Footer />
         </>

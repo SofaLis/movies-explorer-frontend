@@ -4,7 +4,6 @@ class Api {
         this._headers = options.headers
     };
 
-    //Загрузка информации о пользователе с сервера
     getUserInfo() {
         return fetch(`${this._baseUrl}/users/me`, {
             credentials: 'include',
@@ -30,6 +29,43 @@ class Api {
         })
             .then(this._handleResponse);
     }
+
+    like(movie) {
+        return fetch(`${this._baseUrl}/movies`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: this._headers,
+            body: JSON.stringify({
+                country: movie.country,
+                director: movie.director,
+                duration: movie.duration,
+                year: movie.year,
+                description: movie.description,
+                image: `https://api.nomoreparties.co${movie.image.url}`,
+                trailerLink: movie.trailerLink,
+                thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
+                movieId: movie.id.toString(),
+                nameRU: movie.nameRU,
+                nameEN: movie.nameEN
+            })
+        })
+            .then((res) => {
+                return this._testStatus(res)
+            })
+    };
+
+    deleteMovie(id) {
+        return fetch(`${this._baseUrl}/movies/{id}`, { 
+          method: 'DELETE',
+          credentials:'include',
+          headers: this._headers,
+        })
+        .then((res) => {
+            return this._testStatus(res)
+        })
+    };
+
+
 
     //Проверяем на ошибку
     _testStatus(res) {

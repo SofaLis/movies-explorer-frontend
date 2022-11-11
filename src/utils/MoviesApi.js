@@ -7,7 +7,6 @@ class ApiMov {
     //Загрузка информации о пользователе с сервера
     getMovies() {
         return fetch(`${this._baseUrl}`, {
-            credentials: 'include',
             headers: this._headers,
         })
             .then((res) => {
