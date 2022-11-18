@@ -88,7 +88,7 @@ class Api {
 
 }
 const api = new Api({
-    baseUrl: 'https://api.sofalis.movies.nomoredomains.icu/',
+    baseUrl: 'https://api.sofalis.movies.nomoredomains.icu',
     headers: {
         'Content-Type': 'application/json',
     }
