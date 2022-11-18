@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://sofalis.movies.nomoredomains.icu';
+export const BASE_URL = 'https://api.sofalis.movies.nomoredomains.icu';
 
 function testStatus(res) {
   if (res.ok) {
