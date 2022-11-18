@@ -18,7 +18,7 @@ export default function Profile(props) {
         props.onRegister(validationForm.isValues.name, validationForm.isValues.email);
     }
 
-    const buttonDis = props.isAddForm ? validationForm.isValidity : !props.isAddForm;
+    const buttonDis = props.isAddForm ? !props.isAddForm : validationForm.isValidity;
 
     return (
         <>

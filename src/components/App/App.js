@@ -26,7 +26,6 @@ function App() {
   const [isMovie, setIsMovie] = React.useState([]);
   const [isMovieSearch, setIsMovieSearch] = React.useState([]);
   const [isMovieSave, setIsMovieSave] = React.useState([]);
-  const [isMovieSaveSearch, setIsMovieSaveSearch] = React.useState([]);
   //Загрузка для плеодера
   const [isLoading, setIsLoading] = React.useState(true);
   //не уверена, что заработает, но должно
@@ -164,7 +163,7 @@ function App() {
     let item = saveMovieRouter ? isMovieSave : isMovie;
     const filter = item.filter((movie) => movie.nameRU.toLowerCase().includes(isSearch.toLowerCase()));
     filter.length === 0 ? setIsBigErr({ text: 'Ничего не найдено' }) :
-      saveMovieRouter ? setIsMovieSaveSearch(filter) : setIsMovieSearch(filter);
+      saveMovieRouter ? setIsMovieSave(filter) : setIsMovieSearch(filter);
     !saveMovieRouter && localStorage.setItem('filtermovies', JSON.stringify(filter));
     setIsBigErr({ text: '' })
   };
@@ -216,9 +215,9 @@ function App() {
             isAddForm={isAddForm} />
 
           <ProtectedRoute path="/saved-movies" component={SavedMovies} isLoggedIn={isLoggedIn}
-            movies={isMovieSaveSearch} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
+            movies={isMovieSave} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
             isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} onClick={handleSearchMoviesClick}
-            isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMovies={setIsMovieSaveSearch} checkId={checkId}
+            isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMovies={setIsMovieSave} checkId={checkId}
             setIsLoading={setIsLoading} isLike={checkLikeMov} />
 
           <Route path="/signup">
