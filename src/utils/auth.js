@@ -1,4 +1,4 @@
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://api.sofalis.movies.nomoredomains.icu/';
 
 function testStatus(res) {
   if (res.ok) {
