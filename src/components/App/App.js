@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
@@ -22,16 +23,20 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   //данные пользователя
   const [currentUser, setCurrentUser] = React.useState({});
-  //карточки которые должны быть загружены из стороннего апи
-  const [movieList, setMovieList] = React.useState([]);
   const [isMovie, setIsMovie] = React.useState([]);
-  //изменяем статус лайка 
-  const [isLike, setIsLike] = React.useState(false);
+  const [isMovieSearch, setIsMovieSearch] = React.useState([]);
+  const [isMovieSave, setIsMovieSave] = React.useState([]);
+  const [isMovieSaveSearch, setIsMovieSaveSearch] = React.useState([]);
   //Загрузка для плеодера
-  const [isLoad, setIsLoad] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   //не уверена, что заработает, но должно
   const [isSearch, setIsSearch] = React.useState('');
+  const [isBigErr, setIsBigErr] = React.useState({ text: '' });
+  const [isErrAuth, setIsErrAuth] = React.useState({ text: '' });
+  const [isAddForm, setIsAddForm] = React.useState(false);
   const history = useHistory();
+
+  //отдельный блок для авторизации/регистрации
 
   React.useEffect(() => {
     auth.getContent()
@@ -49,47 +54,28 @@ function App() {
 
   React.useEffect(() => {
     Promise.all([
-      api.getUserInfo()])
+    api.getUserInfo() ])
       .then(([users]) => {
         setCurrentUser(users);
       })
       .catch((err) => {
-        console.log(`${err}, попробуйте ещё`);
       })
-  }, [isLoggedIn, history]);
-
-  React.useEffect(() => {
-    apiMov.getMovies()
-      .then((movies) => {
-        setIsMovie(movies)
-      })
-  }, [isMovie]);
-
-
-  //ПОЛЯ АВТОРИЗАЦИИ
-  function handleLogIn(email, password) {
-    auth.authorize(email, password)
-      .then((res) => {
-        setIsLoggedIn(true);
-        history.push('/');
-        setCurrentUser(res);
-        console.log(email);
-      })
-      .catch((err) => {
-        console.log(err)
-      })
-  }
+  }, [history]);
 
   function handleRegister(name, email, password) {
+    setIsAddForm(true)
     auth.register(name, email, password)
       .then((res) => {
         handleLogIn(email, password)
         setIsLoggedIn(true);
         history.push('/');
         setCurrentUser(res);
+        setIsAddForm(false)
         console.log(name);
       })
-      .catch((res) => {
+      .catch((err) => {
+        setIsErrAuth({ text: 'Простите, произошла ошибка' });
+        setIsAddForm(false)
       })
   }
 
@@ -97,9 +83,10 @@ function App() {
     api.setUser(name, email)
       .then((res) => {
         setCurrentUser(res);
-        console.log(name);
+        console.log(res)
       })
-      .catch((res) => {
+      .catch((err, res) => {
+        setIsErrAuth({ text: 'Простите, произошла ошибка' });
       })
   }
 
@@ -110,23 +97,101 @@ function App() {
         history.push('/signin');
         setCurrentUser({});
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setIsErrAuth({ text: 'Простите, произошла ошибка' })
+      });
+  }
+
+  function handleLogIn(email, password) {
+    setIsAddForm(true)
+    auth.authorize(email, password)
+      .then((res) => {
+        setIsAddForm(false)
+        setIsLoggedIn(true);
+        setCurrentUser(res);
+        history.push('/');
+        console.log(email);
+      })
+      .catch((err) => {
+        setIsAddForm(false)
+        setIsErrAuth({ text: 'Простите, произошла ошибка' });
+      })
+  }
+
+  //РАБОТА С ФИЛЬМАМИ
+
+  React.useEffect(() => {
+    setIsMovieSearch(JSON.parse(localStorage.getItem("filtermovies")));
+    getLikes()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
+
+  function getLikes() {
+    api.getLikes()
+      .then((res) => {
+        setIsMovieSave(res.filter((movie) => movie.owner === currentUser._id))
+        setIsLoading(false)
+      })
+      .catch(() => {
+        setIsBigErr({ text: 'Простите, произошла ошибка' })
+      })
+  }
+
+  React.useEffect(() => {
+    searchFromMovies(false)
+  }, [isMovie]);
+
+  const checkLikeMov = (id) => isMovieSave.some((movie) => parseInt(movie.movieId) === id);
+  const checkId = (id) => isMovieSave.find((movie) => parseInt(movie.movieId) === id);
+
+  function getMovies() {
+    apiMov.getMovies()
+      .then((res) => {
+        const movie = res.map((movie) => {
+          movie.isLike = checkLikeMov(movie.id);
+          return movie;
+        });
+        setIsMovie(movie)
+        console.log(movie)
+        setIsLoading(false)
+      })
+      .catch((err) => {
+        setIsBigErr({ text: 'Простите, произошла ошибка сервера' });
+      })
+  }
+
+  function searchFromMovies(saveMovieRouter) {
+    let item = saveMovieRouter ? isMovieSave : isMovie;
+    const filter = item.filter((movie) => movie.nameRU.toLowerCase().includes(isSearch.toLowerCase()));
+    filter.length === 0 ? setIsBigErr({ text: 'Ничего не найдено' }) :
+      saveMovieRouter ? setIsMovieSaveSearch(filter) : setIsMovieSearch(filter);
+    !saveMovieRouter && localStorage.setItem('filtermovies', JSON.stringify(filter));
+    setIsBigErr({ text: '' })
+  };
+
+  function handleSearchMoviesClick(saveMovieRouter) {
+    saveMovieRouter ?
+      searchFromMovies(true) :
+      getMovies()
+
+    console.log(searchFromMovies(true))
   }
 
   function handleCardLike(movie) {
-    console.log(movie.id)
     api.like(movie)
       .then((res) => {
-        setIsLike(true)
+        setIsMovieSave([res, ...isMovieSave]);
+        localStorage.setItem('filtermovies', JSON.stringify(movie));
       })
       .catch((err) => console.log(err));
   }
 
-  function handleCardDislike(movie) {
-    api.deleteMovie(movie.id)
+  function handleCardDislike(id) {
+    api.deleteMovie(id)
       .then((res) => {
-        setIsLike(false)
-        console.log(movie.id)
+        const newMovies = isMovieSave.filter((movie) => movie._id !== res._id);
+        setIsMovieSave(newMovies)
+        console.log(isMovieSave)
       })
       .catch((err) => console.log(err));
   }
@@ -141,19 +206,27 @@ function App() {
           </Route>
 
           <ProtectedRoute path="/movies" component={Movies} isLoggedIn={isLoggedIn}
-          movies={isMovie} onCardLike={handleCardLike} isLike={isLike} onCardDislike={handleCardDislike} />
+            movies={isMovieSearch} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
+            isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} onClick={handleSearchMoviesClick}
+            isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMovies={setIsMovieSearch} checkId={checkId}
+            setIsLoading={setIsLoading} isLike={checkLikeMov} />
 
-          <ProtectedRoute path="/profile" component={Profile} isLoggedIn={isLoggedIn} onClickUpdate={handleSetUser}
-            onRegister={handleLogIn} onClick={handleLogOff} />
+          <ProtectedRoute path="/profile" component={Profile} isLoggedIn={isLoggedIn}
+            onRegister={handleSetUser} onClick={handleLogOff} isErr={isErrAuth} setIsErr={setIsErrAuth}
+            isAddForm={isAddForm} />
 
-          <ProtectedRoute path="/saved-movies" component={SavedMovies} isLoggedIn={isLoggedIn} />
+          <ProtectedRoute path="/saved-movies" component={SavedMovies} isLoggedIn={isLoggedIn}
+            movies={isMovieSaveSearch} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
+            isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} onClick={handleSearchMoviesClick}
+            isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMovies={setIsMovieSaveSearch} checkId={checkId}
+            setIsLoading={setIsLoading} isLike={checkLikeMov} />
 
           <Route path="/signup">
-            <Register onRegister={handleRegister} />
+            <Register onRegister={handleRegister} isErr={isErrAuth} setIsErr={setIsErrAuth} isAddForm={isAddForm} />
           </Route>
 
           <Route path="/signin">
-            <Login onRegister={handleLogIn} />
+            <Login onRegister={handleLogIn} isErr={isErrAuth} setIsErr={setIsErrAuth} isAddForm={isAddForm} />
           </Route>
 
           <Route path="*">

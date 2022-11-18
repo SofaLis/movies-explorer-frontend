@@ -44,9 +44,9 @@ class Api {
                 image: `https://api.nomoreparties.co${movie.image.url}`,
                 trailerLink: movie.trailerLink,
                 thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
-                movieId: movie.id.toString(),
                 nameRU: movie.nameRU,
-                nameEN: movie.nameEN
+                nameEN: movie.nameEN,
+                movieId: movie.id
             })
         })
             .then((res) => {
@@ -54,8 +54,19 @@ class Api {
             })
     };
 
+    getLikes() {
+        return fetch(`${this._baseUrl}/movies`, {
+            credentials: 'include',
+            headers: this._headers,
+        })
+            .then((res) => {
+                return this._testStatus(res)
+            })
+    };
+
+
     deleteMovie(id) {
-        return fetch(`${this._baseUrl}/movies/{id}`, { 
+        return fetch(`${this._baseUrl}/movies/${id}`, { 
           method: 'DELETE',
           credentials:'include',
           headers: this._headers,

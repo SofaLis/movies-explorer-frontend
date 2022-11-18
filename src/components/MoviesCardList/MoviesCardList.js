@@ -38,10 +38,13 @@ export default function MoviesCardList(props) {
     }
 
     React.useEffect(() => {
+        function handleTimeout () {
+            setTimeout(handleResize, 100);
+        }
         handleResize()
-        window.addEventListener("resize", handleResize);
+        window.addEventListener("resize", handleTimeout);
         handleResize();
-        return () => window.removeEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleTimeout);
     }, []);
 
     function handleClickButton() {
@@ -51,8 +54,7 @@ export default function MoviesCardList(props) {
     React.useEffect(() => {
         setIsSeeMov(isMovieCount);
         handleCheckSize()
-        console.log(isMovieCount)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMovieCount, isWindowSize]);
 
 
@@ -61,16 +63,16 @@ export default function MoviesCardList(props) {
             <ul className='card__list'>
                 {props.movies.map((movie, id) => (
                     <MoviesCard
-                        key={movie.id}
+                        key={movie.id || movie._id}
                         movie={movie}
                         onCardLike={props.onCardLike}
-                        isLike={props.isLike}
                         onCardDislike={props.onCardDislike}
                         isVisible={id <= isSeeMov}
+                        checkId={props.checkId}
                     />
                 ))}
             </ul>
-            { (props.movies.length > isMovieCount && props.movies.length > isSeeMov) &&
+            {(props.movies.length > isMovieCount && props.movies.length > isSeeMov) &&
                 <button className='button card__button' onClick={handleClickButton}>Ещё</button>
             }
         </>
