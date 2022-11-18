@@ -30,6 +30,7 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(true);
   //не уверена, что заработает, но должно
   const [isSearch, setIsSearch] = React.useState('');
+  const [isSearchSave, setIsSearchSave] = React.useState('');
   const [isBigErr, setIsBigErr] = React.useState({ text: '' });
   const [isErrAuth, setIsErrAuth] = React.useState({ text: '' });
   const [isAddForm, setIsAddForm] = React.useState(false);
@@ -137,7 +138,7 @@ function App() {
   }
 
   React.useEffect(() => {
-    searchFromMovies(false)
+    searchFromMovies(false, isSearch)
   }, [isMovie]);
 
   const checkLikeMov = (id) => isMovieSave.some((movie) => parseInt(movie.movieId) === id);
@@ -161,7 +162,8 @@ function App() {
 
   function searchFromMovies(saveMovieRouter) {
     let item = saveMovieRouter ? isMovieSave : isMovie;
-    const filter = item.filter((movie) => movie.nameRU.toLowerCase().includes(isSearch.toLowerCase()));
+    let search = saveMovieRouter ? isSearchSave.toLowerCase() : isSearch.toLowerCase()
+    const filter = item.filter((movie) => movie.nameRU.toLowerCase().includes(search));
     filter.length === 0 ? setIsBigErr({ text: 'Ничего не найдено' }) :
       saveMovieRouter ? setIsMovieSave(filter) : setIsMovieSearch(filter);
     !saveMovieRouter && localStorage.setItem('filtermovies', JSON.stringify(filter));
@@ -170,7 +172,7 @@ function App() {
 
   function handleSearchMoviesClick(saveMovieRouter) {
     saveMovieRouter ?
-      searchFromMovies(true) :
+      searchFromMovies(true, isSearchSave) :
       getMovies()
 
     console.log(searchFromMovies(true))
@@ -216,7 +218,7 @@ function App() {
 
           <ProtectedRoute path="/saved-movies" component={SavedMovies} isLoggedIn={isLoggedIn}
             movies={isMovieSave} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
-            isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} onClick={handleSearchMoviesClick}
+            isLoading={isLoading} isSearch={isSearchSave} setIsSearch={setIsSearchSave} onClick={handleSearchMoviesClick}
             isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMovies={setIsMovieSave} checkId={checkId}
             setIsLoading={setIsLoading} isLike={checkLikeMov} />
 
