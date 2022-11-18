@@ -18,6 +18,7 @@ export default function useValidation() {
         setIsValues({ ...isValues, [name]: value });
         setIsErr({ ...isErr, [name]: target.validationMessage });
         setIsValidity(target.closest("form").checkValidity());
+        console.log(isValues.name)
     };
 
     const resetForm = useCallback(

@@ -44,7 +44,8 @@ export default function Authorization(props) {
                         <div className="authorizatio__input-container">
                             <span className="authorizatio__caption">Пароль</span>
                             <input className={`${props.isErrPassword ? "authorizatio__input authorizatio__input_active" : "authorizatio__input"}`}
-                                type="password" id="password" name="password" required onChange={props.handleChangePassword} value={props.password} />
+                                type="password" id="password" name="password" required onChange={props.handleChangePassword} value={props.password}
+                                minLength="3" />
                             <span className={`${props.isErrPassword ? "authorizatio_err authorizatio_err_active" : "authorizatio_err"}`}>
                                 {props.isErrPassword}
                             </span>

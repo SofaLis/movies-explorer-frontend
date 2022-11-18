@@ -44,6 +44,7 @@ function App() {
         setIsLoggedIn(true);
         history.push("/");
         setCurrentUser(user);
+        console.log(user)
       })
       .catch((err) => {
         history.push("/");
@@ -71,7 +72,6 @@ function App() {
         history.push('/');
         setCurrentUser(res);
         setIsAddForm(false)
-        console.log(name);
       })
       .catch((err) => {
         setIsErrAuth({ text: 'Простите, произошла ошибка' });
@@ -80,12 +80,15 @@ function App() {
   }
 
   function handleSetUser(name, email) {
+    setIsAddForm(true)
     api.setUser(name, email)
       .then((res) => {
         setCurrentUser(res);
-        console.log(res)
+        setIsAddForm(false)
+        console.log(res);
       })
       .catch((err, res) => {
+        setIsAddForm(false)
         setIsErrAuth({ text: 'Простите, произошла ошибка' });
       })
   }
@@ -109,6 +112,7 @@ function App() {
         setIsAddForm(false)
         setIsLoggedIn(true);
         setCurrentUser(res);
+        setIsMovieSearch(JSON.parse(localStorage.removeItem("filtermovies")));
         history.push('/');
         console.log(email);
       })
@@ -122,20 +126,16 @@ function App() {
 
   React.useEffect(() => {
     setIsMovieSearch(JSON.parse(localStorage.getItem("filtermovies")));
-    getLikes()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentUser]);
-
-  function getLikes() {
     api.getLikes()
       .then((res) => {
-        setIsMovieSave(res.filter((movie) => movie.owner === currentUser._id))
+        setIsMovieSave(res)
         setIsLoading(false)
       })
       .catch(() => {
         setIsBigErr({ text: 'Простите, произошла ошибка' })
       })
-  }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentUser]);
 
   React.useEffect(() => {
     searchFromMovies(false, isSearch)
@@ -175,13 +175,13 @@ function App() {
       searchFromMovies(true, isSearchSave) :
       getMovies()
 
-    console.log(searchFromMovies(true))
   }
 
   function handleCardLike(movie) {
     api.like(movie)
       .then((res) => {
         setIsMovieSave([res, ...isMovieSave]);
+        console.log(res)
         localStorage.setItem('filtermovies', JSON.stringify(movie));
       })
       .catch((err) => console.log(err));
@@ -192,7 +192,7 @@ function App() {
       .then((res) => {
         const newMovies = isMovieSave.filter((movie) => movie._id !== res._id);
         setIsMovieSave(newMovies)
-        console.log(isMovieSave)
+        console.log(res)
       })
       .catch((err) => console.log(err));
   }

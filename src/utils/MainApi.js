@@ -18,16 +18,15 @@ class Api {
         return fetch(`${this._baseUrl}/users/me`, {
             method: 'PATCH',
             credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-                "Accept": "application/json",
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 name: name,
                 email: email,
             })
         })
-            .then(this._handleResponse);
+        .then((res) => {
+            return this._testStatus(res)
+        })
     }
 
     like(movie) {
@@ -88,7 +87,7 @@ class Api {
 
 }
 const api = new Api({
-    baseUrl: 'https://api.sofalis.movies.nomoredomains.icu',
+    baseUrl: 'http://localhost:3000',
     headers: {
         'Content-Type': 'application/json',
     }

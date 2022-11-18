@@ -39,7 +39,7 @@
 
 .profile__input-container_email {
     border: none;
-    padding-top: 16px;
+    padding: 16px 0 0;
 }
 
 .profile__caption {
