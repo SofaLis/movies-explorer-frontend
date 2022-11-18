@@ -41,14 +41,19 @@ export default function Profile(props) {
                                 type="email" id="email" name="email" pattern="^[A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4}$"
                                 required onChange={validationForm.handleChange} value={validationForm.isValues.email} />
                         </div>
-                        <span className={`${validationForm.isErr.email ? "profile_err profile_err_active" : "authorizatio_err"}`}>
-                                {validationForm.isErr.email}
-                            </span>
+                        <span className={`${validationForm.isErr.email ? "profile_err profile_err_active" : "profile_err"}`}>
+                            {validationForm.isErr.email}
+                        </span>
                     </div>
+                    <div className="profile__button-container">
                     <button type="submit" disabled={!buttonDis}
                         className={`${!props.buttonDis ? "button profile__button_submit profile__button_off-active" : "button profile__button_submit"}`} >
                         Редактировать
                     </button>
+                    <span className={`${props.isErr !== '' ? "profile_err profile_err_active" : "profile_err"}`}>
+                        {props.isErr.text}
+                    </span>
+                    </div>
                     <button type="button" className="button profile__button_logoff" onClick={props.onClick}>
                         Выйти из аккаунта
                     </button>

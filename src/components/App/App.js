@@ -123,6 +123,7 @@ function App() {
   }
 
   //РАБОТА С ФИЛЬМАМИ
+  // useEffects
 
   React.useEffect(() => {
     setIsMovieSearch(JSON.parse(localStorage.getItem("filtermovies")));
@@ -141,8 +142,12 @@ function App() {
     searchFromMovies(false, isSearch)
   }, [isMovie]);
 
+  //const
+
   const checkLikeMov = (id) => isMovieSave.some((movie) => parseInt(movie.movieId) === id);
   const checkId = (id) => isMovieSave.find((movie) => parseInt(movie.movieId) === id);
+
+  // function
 
   function getMovies() {
     apiMov.getMovies()
@@ -172,7 +177,7 @@ function App() {
 
   function handleSearchMoviesClick(saveMovieRouter) {
     saveMovieRouter ?
-      searchFromMovies(true, isSearchSave) :
+      searchFromMovies(true) :
       getMovies()
 
   }

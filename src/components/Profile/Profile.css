@@ -76,6 +76,13 @@
     opacity: 0.7;
 }
 
+.profile__button-container {
+    margin: 220px auto 16px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: flex-end;
+}
 
 .profile__button {
     font-weight: 400;
@@ -90,11 +97,6 @@
 
 .profile__button:hover {
     opacity: 0.5;
-}
-
-
-.profile__button_submit {
-    margin: 220px auto 16px;
 }
 
 .profile__button_logoff {
