@@ -1,3 +1,5 @@
+import { MOV_URL } from './constant';
+
 class ApiMov {
     constructor(options) {
         this._baseUrl = options.baseUrl
@@ -9,9 +11,7 @@ class ApiMov {
         return fetch(`${this._baseUrl}`, {
             headers: this._headers,
         })
-            .then((res) => {
-                return this._testStatus(res)
-            })
+        .then((res) => this._testStatus(res));
     };
 
 
@@ -20,12 +20,12 @@ class ApiMov {
         if (res.ok) {
             return res.json();
         }
-        return Promise.reject(`${res}`);
+        return Promise.reject(res.status);
     }
 
 }
 const apiMov = new ApiMov({
-    baseUrl: 'https://api.nomoreparties.co/beatfilm-movies',
+    baseUrl: MOV_URL,
     headers: {
         'Content-Type': 'application/json',
     }

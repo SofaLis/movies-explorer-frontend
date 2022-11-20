@@ -15,15 +15,16 @@ export default function SavedMovies(props) {
     const [isSelectedShortMovie, setIsSelectedIsShortMovie] = useState(false);
 
     React.useEffect(() => {
-        props.setIsBigErr({text:''});
+        props.setIsBigErr({ text: '' });
         props.setIsSearch('');
+        // props.setMovies([]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
+        // props.setIsBigErr({ text: '' });
         props.setIsLoading(true);
-        props.setIsBigErr({text:''});
         props.isSearch ? props.onClick(false) : setIsErr(true);
     }
 
@@ -46,7 +47,7 @@ export default function SavedMovies(props) {
 
     return (
         <>
-            <Header  isLoggedIn={props.isLoggedIn} />
+            <Header isLoggedIn={props.isLoggedIn} />
             <section className="save-movies">
                 <SearchForm isErr={isErr} onSubmit={handleSubmit} isSearch={props.isSearch} onChange={handleOnChange} />
                 <FilterCheckbox onSelectShortMovie={handleChangeShortMovie} isSelectedShortMovie={isSelectedShortMovie} />
@@ -57,6 +58,9 @@ export default function SavedMovies(props) {
                         onCardDislike={props.onCardDislike}
                         checkId={props.checkId}
                     />
+                }
+                {props.isBigErr !== '' &&
+                    <p className="movies__err">{props.isBigErr.text}</p>
                 }
             </section>
             <Footer />

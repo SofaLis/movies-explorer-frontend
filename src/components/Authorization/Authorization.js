@@ -35,7 +35,7 @@ export default function Authorization(props) {
                             <span className="authorizatio__caption">E-mail</span>
                             <input className={`${props.isErrEmail ? "authorizatio__input authorizatio__input_active" : "authorizatio__input"}`}
                                 type="email" id="email" name="email" required onChange={props.handleChangeEmail}
-                                value={props.email} pattern="^[A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4}$" />
+                                value={props.email} pattern="^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.+[a-zA-Z]{2,}$" />
                             <span className={`${props.isErrEmail !== '' ? "authorizatio_err authorizatio_err_active" : "authorizatio_err"}`}>
                                 {props.isErrEmail}
                             </span>

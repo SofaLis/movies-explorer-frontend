@@ -1,3 +1,5 @@
+import { BASE_URL } from './constant';
+
 class Api {
     constructor(options) {
         this._baseUrl = options.baseUrl
@@ -9,9 +11,7 @@ class Api {
             credentials: 'include',
             headers: this._headers,
         })
-            .then((res) => {
-                return this._testStatus(res)
-            })
+        .then((res) => this._testStatus(res));
     };
 
     setUser = (name, email) => {
@@ -24,9 +24,7 @@ class Api {
                 email: email,
             })
         })
-        .then((res) => {
-            return this._testStatus(res)
-        })
+        .then((res) => this._testStatus(res));
     }
 
     like(movie) {
@@ -48,9 +46,7 @@ class Api {
                 movieId: movie.id
             })
         })
-            .then((res) => {
-                return this._testStatus(res)
-            })
+        .then((res) => this._testStatus(res));
     };
 
     getLikes() {
@@ -58,9 +54,7 @@ class Api {
             credentials: 'include',
             headers: this._headers,
         })
-            .then((res) => {
-                return this._testStatus(res)
-            })
+        .then((res) => this._testStatus(res));
     };
 
 
@@ -70,9 +64,7 @@ class Api {
           credentials:'include',
           headers: this._headers,
         })
-        .then((res) => {
-            return this._testStatus(res)
-        })
+        .then((res) => this._testStatus(res));
     };
 
 
@@ -82,12 +74,12 @@ class Api {
         if (res.ok) {
             return res.json();
         }
-        return Promise.reject(`${res}`);
+        return Promise.reject(res.status);
     }
 
 }
 const api = new Api({
-    baseUrl: 'https://api.sofalis.movies.nomoredomains.icu',
+    baseUrl: BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     }

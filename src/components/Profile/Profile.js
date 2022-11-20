@@ -5,9 +5,10 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 import useValidation from "../../utils/validations";
 
 export default function Profile(props) {
+    const [isValue, setIsValue] = React.useState(true);
+
     const currentUser = React.useContext(CurrentUserContext);
     const validationForm = useValidation()
-
     React.useEffect(() => {
         props.setIsErr({ text: '' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -18,7 +19,16 @@ export default function Profile(props) {
         props.onRegister(validationForm.isValues.name, validationForm.isValues.email);
     }
 
-    const buttonDis = props.isAddForm ? !props.isAddForm : validationForm.isValidity;
+    React.useEffect(() => {
+        if (validationForm.isValues.email === currentUser.email && validationForm.isValues.name === currentUser.name) {
+            setIsValue(false)
+        } else {
+            setIsValue(true)
+        }
+    }, [currentUser.email, currentUser.name, setIsValue, validationForm.isValues.email, validationForm.isValues.name])
+    
+    const buttonDis = props.isAddForm || isValue ? true : false;
+    console.log(isValue, buttonDis)
 
     return (
         <>
@@ -38,7 +48,7 @@ export default function Profile(props) {
                         <div className="profile__input-container profile__input-container_email">
                             <span className="profile__caption">E-mail</span>
                             <input className={`${validationForm.isErr.email ? "profile__input profile__input_active" : "profile__input"}`}
-                                type="email" id="email" name="email" pattern="^[A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4}$"
+                                type="email" id="email" name="email" pattern="^[a-zA-Z0-9._:$!%-]+@[a-zA-Z0-9.-]+\.+[a-zA-Z]{2,}$"
                                 required onChange={validationForm.handleChange} value={validationForm.isValues.email} />
                         </div>
                         <span className={`${validationForm.isErr.email ? "profile_err profile_err_active" : "profile_err"}`}>

@@ -12,7 +12,6 @@ export default function Register(props) {
     }
 
     const buttonDis = props.isAddForm ? !props.isAddForm : validationForm.isValidity;
-    console.log(props.isAddForm)
 
   return (
       <Authorization formName="register" title="Добро пожаловать!" buttonText="Регистрация" 

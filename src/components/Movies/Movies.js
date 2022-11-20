@@ -14,13 +14,15 @@ export default function Movies(props) {
     React.useEffect(() => {
         props.setIsBigErr({text:''});
         props.setIsSearch('');
+        props.setMovie([]);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function handleSubmit(e) {
         e.preventDefault();
-        props.setIsLoading(true);
         props.setIsBigErr({text:''});
+        props.setMovie([]);
+        props.setIsLoading(true);
         props.isSearch ? props.onClick(false) : setIsErr(true);
     }
 
