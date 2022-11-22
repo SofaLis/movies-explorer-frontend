@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-use-before-define */
 import React from 'react';
 import './SavedMovies.css';
@@ -18,24 +19,27 @@ export default function SavedMovies(props) {
 
     React.useEffect(() => {
         setIsSelectedIsShortMovie(JSON.parse(localStorage.getItem('isCheckSave')) || false);
-        setIsSeeMovie(localStorage.getItem("moviesSearchSave") || []);
+        props.setIsSearch(localStorage.getItem("isSearch") || "");
     }, []);
 
     React.useEffect(() => {
-        setIsSeeMovie(props.movies);
+        setIsSeeMovie(props.moviesSave);
         props.setIsBigErr({ text: '' });
-        props.setMovieSearch(props.movies)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.movies, props.currentUser]);
+    }, [props.moviesSave]);
 
     function searchFromMovies() {
         props.setIsBigErr({ text: '' })
         const filter = props.isMovieSearch.filter((movie) => movie.nameRU.toLowerCase().includes(props.isSearch.toLowerCase()));
-        filter.length === 0 ? props.setIsBigErr({ text: ERR_NOT_MOV }) : setIsSeeMovie(filter);
+        if (filter.length === 0)  {
+            props.setIsBigErr({ text: ERR_NOT_MOV })
+        } else {
+            setIsSeeMovie(filter)
+            props.setMovieSearch(filter)
+        }
         localStorage.setItem('isCheckSave', JSON.stringify(isSelectedShortMovie))
+        localStorage.setItem("isSearch", props.isSearch);
         props.setIsLoading(false);
-        localStorage.setItem("moviesSearchSave", JSON.stringify(filter));
-        console.log(localStorage)
     };
 
     function handleSubmit(e) {

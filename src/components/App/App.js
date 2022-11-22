@@ -19,7 +19,7 @@ import ProtectedRoute from '../../utils/ProtectedRoute';
 
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-import { TEXT_OK, TEXT_OK_REG, TEXT_OK_LOG, ERR500, ERR409, ERR400, ERR_NOT_MOV } from '../../utils/constant';
+import { TEXT_OK, TEXT_OK_REG, TEXT_OK_LOG, ERR500, ERR409, ERR400, ERR_NOT_MOV, START_MOV } from '../../utils/constant';
 
 function App() {
   //проверка на авторизацию
@@ -63,12 +63,9 @@ function App() {
 
   React.useEffect(() => {
     Promise.all([
-      api.getUserInfo(), api.getLikes()])
+      api.getUserInfo() ])
       .then(([users, res]) => {
         setCurrentUser(users);
-        setIsMovieSave(res.filter((movie) => movie.owner === currentUser._id))
-        setIsMovieSaveSearch(res.filter((movie) => movie.owner === currentUser._id))
-        console.log(isMovieSaveSearch)
       })
       .catch((err) => {
       })
@@ -81,9 +78,7 @@ function App() {
         setIsAddForm(false)
         setIsLoggedIn(true);
         setCurrentUser(res);
-        setIsMovieSave(localStorage.getItem("moviesSave") || []);
         history.push('/movies');
-        console.log(res);
         setIsErrAuth({ text: TEXT_OK_LOG });
       })
       .catch((err) => {
@@ -105,7 +100,6 @@ function App() {
         setIsErrAuth({ text: TEXT_OK_REG });
       })
       .catch((err) => {
-        console.log(err)
         if (err === 409) {
           setIsErrAuth({ text: ERR409 });
         } else {
@@ -153,37 +147,28 @@ function App() {
   // useEffects
 
   React.useEffect(() => {
-      getLikes()
+    getLikes()
+    console.log(localStorage)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
   React.useEffect(() => {
-    setIsMovieSearch([]);
+    setIsMovieSearch(JSON.parse(localStorage.getItem("movies")) || [])
     searchFromMovies()
-    localStorage.setItem("moviesSearch", JSON.stringify(isMovieSearch));
-  }, [isMovie]);
-
-  React.useEffect(() => {
-    setIsMovieSearch([]);
-  }, [currentUser]);
+  }, [ isMovie ]);
 
   function getLikes() {
     api.getLikes()
       .then((res) => {
-        setIsMovieSave(res.filter((movie) => movie.owner === currentUser._id))
-        setIsMovieSaveSearch(res.filter((movie) => movie.owner === currentUser._id))
+        setIsMovieSave(res)
+        setIsMovieSaveSearch(res)
         setIsLoading(false)
-        // localStorage.setItem("moviesSave", JSON.stringify(isMovieSave));
       })
       .catch(() => {
-        setIsBigErr({ text: ERR500 })
+        setIsBigErr({ text: ERR500 });
       })
   }
 
-  React.useEffect(() => {
-    setIsMovieSearch(localStorage.getItem("moviesSearch") || []);
-    setIsSearch(localStorage.getItem("isSearch") || "");
-  }, []);
 
   //const
 
@@ -200,10 +185,15 @@ function App() {
           return movie;
         });
         setIsMovie(movie)
+        setIsMovieSearch(JSON.parse(localStorage.getItem("movies")) || [])
         setIsLoading(false)
       })
       .catch((err) => {
-        setIsBigErr({ text: ERR500 });
+        if (err === 401) {
+          setIsBigErr({ text: START_MOV })
+        } else {
+          setIsBigErr({ text: ERR500 });
+        }
       })
   }
 
@@ -213,11 +203,12 @@ function App() {
     let item = isMovie;
     const filter = item.filter((movie) => movie.nameRU.toLowerCase().includes(isSearch.toLowerCase()));
     filter.length === 0 ? setIsBigErr({ text: ERR_NOT_MOV }) : setIsMovieSearch(filter);
-    localStorage.setItem('filtermovies', JSON.stringify(filter));
-    localStorage.setItem("isSearch", isSearch);
+    localStorage.setItem("movies", JSON.stringify(filter))
+    setIsLoading(false)
   };
 
   function handleSearchMoviesClick() {
+    searchFromMovies()
     getMovies()
   }
 
@@ -225,6 +216,7 @@ function App() {
     api.like(movie)
       .then((res) => {
         setIsMovieSave([res, ...isMovieSave]);
+        setIsMovieSaveSearch([res, ...isMovieSaveSearch]);
       })
       .catch((err) => console.log(err));
   }
@@ -233,8 +225,9 @@ function App() {
     api.deleteMovie(id)
       .then((res) => {
         const newMovies = isMovieSave.filter((movie) => movie._id !== res._id);
+        const newMoviesSerch = isMovieSaveSearch.filter((movie) => movie._id !== res._id);
+        setIsMovieSaveSearch(newMoviesSerch)
         setIsMovieSave(newMovies)
-        localStorage.removeItem("moviesSave", JSON.stringify(isMovieSave));
       })
       .catch((err, res) => {
         console.log(err)
@@ -254,14 +247,14 @@ function App() {
             movies={isMovieSearch} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
             isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} onClick={handleSearchMoviesClick}
             isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMoviesSearch={setIsMovieSearch} checkId={checkId}
-            setIsLoading={setIsLoading} isLike={checkLikeMov} />
+            setIsLoading={setIsLoading} isLike={checkLikeMov} isMovieSave ={isMovieSave} />
 
           <ProtectedRoute path="/profile" component={Profile} isLoggedIn={isLoggedIn}
             onRegister={handleSetUser} onClick={handleLogOff} isErr={isErrAuth} setIsErr={setIsErrAuth}
             isAddForm={isAddForm} />
 
           <ProtectedRoute path="/saved-movies" component={SavedMovies} isLoggedIn={isLoggedIn}
-            movies={isMovieSave} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
+            moviesSave={isMovieSave} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
             isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch}
             isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMovies={setIsMovieSave} checkId={checkId}
             setIsLoading={setIsLoading} isLike={checkLikeMov} isMovieSearch={isMovieSaveSearch}
@@ -284,3 +277,4 @@ function App() {
 }
 
 export default App;
+

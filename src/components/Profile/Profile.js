@@ -28,7 +28,6 @@ export default function Profile(props) {
     }, [currentUser.email, currentUser.name, setIsValue, validationForm.isValues.email, validationForm.isValues.name])
 
     const buttonDis = props.isAddForm || isValue ? true : false;
-    console.log(isValue, buttonDis)
 
     return (
         <>

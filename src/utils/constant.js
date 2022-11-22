@@ -10,3 +10,4 @@ export const ERR500 = 'Простите, произошла ошибка';
 export const ERR409 = 'Пользователь с таким email уже существует';
 export const ERR400 = 'Пожалуйста, проверьте данные';
 export const ERR_NOT_MOV = 'Ничего не найдено';
+export const START_MOV = 'Начнём, введите название фильма или ключевое слово'
