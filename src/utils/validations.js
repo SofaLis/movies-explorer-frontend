@@ -1,5 +1,5 @@
 import React, { useCallback } from "react";
-import CurrentUserContext  from "../contexts/CurrentUserContext";
+import CurrentUserContext from "../contexts/CurrentUserContext";
 
 export default function useValidation() {
     const currentUser = React.useContext(CurrentUserContext);
@@ -18,7 +18,6 @@ export default function useValidation() {
         setIsValues({ ...isValues, [name]: value });
         setIsErr({ ...isErr, [name]: target.validationMessage });
         setIsValidity(target.closest("form").checkValidity());
-        console.log(isValues.name)
     };
 
     const resetForm = useCallback(

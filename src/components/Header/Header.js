@@ -9,11 +9,11 @@ import Navigation from '../Navigation/Navigation';
 export default function Header(props) {
     const [isOpen, setIsOpen] = React.useState(false);
 
-    function handleClickOpen () {
+    function handleClickOpen() {
         setIsOpen(true)
     }
 
-    function handleClickClose () {
+    function handleClickClose() {
         setIsOpen(false)
     }
 
@@ -23,7 +23,7 @@ export default function Header(props) {
                 <Link className="link" to="/">
                     <img src={logo} alt="Логотип" className="header__logo" />
                 </Link>
-                {props.isLoggedIn ?  <HeaderLogIn onClick={handleClickOpen} /> : <HeaderLogOff />}
+                {props.isLoggedIn ? <HeaderLogIn onClick={handleClickOpen} /> : <HeaderLogOff />}
             </div>
             <Navigation isOpen={isOpen} onClick={handleClickClose} />
         </header >

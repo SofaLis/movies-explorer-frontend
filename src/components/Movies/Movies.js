@@ -11,28 +11,29 @@ import { useState } from "react";
 export default function Movies(props) {
     const [isErr, setIsErr] = React.useState(false);
     const [isSelectedShortMovie, setIsSelectedIsShortMovie] = useState(false);
+
     React.useEffect(() => {
-        props.setIsBigErr({text:''});
-        props.setIsSearch('');
-        props.setMovie([]);
+        setIsSelectedIsShortMovie(JSON.parse(localStorage.getItem('isCheck')) || false);
+    }, []);
+
+
+    React.useEffect(() => {
+        props.setIsBigErr({ text: '' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+
     function handleSubmit(e) {
         e.preventDefault();
-        props.setIsBigErr({text:''});
-        props.setMovie([]);
+        props.setIsBigErr({ text: '' });
+        props.setMoviesSearch([]);
         props.setIsLoading(true);
-        props.isSearch ? props.onClick(false) : setIsErr(true);
+        props.isSearch ? props.onClick() : setIsErr(true);
     }
 
     function handleChangeShortMovie() {
-        if (isSelectedShortMovie) {
-            setIsSelectedIsShortMovie(false)
-        } else {
-            setIsSelectedIsShortMovie(true)
-        }
-
+        setIsSelectedIsShortMovie(!isSelectedShortMovie)
+        localStorage.setItem('isCheck', JSON.stringify(!isSelectedShortMovie));
     }
 
     //Это мы изменяем списко фильмов в завимимости от того, нажали ли на чекбоксю

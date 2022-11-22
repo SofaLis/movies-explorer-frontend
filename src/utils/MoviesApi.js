@@ -11,7 +11,7 @@ class ApiMov {
         return fetch(`${this._baseUrl}`, {
             headers: this._headers,
         })
-        .then((res) => this._testStatus(res));
+            .then((res) => this._testStatus(res));
     };
 
 

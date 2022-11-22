@@ -38,7 +38,7 @@ export default function MoviesCardList(props) {
     }
 
     React.useEffect(() => {
-        function handleTimeout () {
+        function handleTimeout() {
             setTimeout(handleResize, 100);
         }
         handleResize()
@@ -56,7 +56,6 @@ export default function MoviesCardList(props) {
         handleCheckSize()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMovieCount, isWindowSize]);
-
 
     return (
         <>

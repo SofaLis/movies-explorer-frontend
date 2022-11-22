@@ -1,5 +1,5 @@
-// export const BASE_URL = 'https://api.sofalis.movies.nomoredomains.icu';
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'https://api.sofalis.movies.nomoredomains.icu';
+// export const BASE_URL = 'http://localhost:3000';
 export const MOV_URL = 'https://api.nomoreparties.co/beatfilm-movies';
 
 export const TEXT_OK = 'Вы успешно изменили данные!';

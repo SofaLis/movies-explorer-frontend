@@ -11,7 +11,7 @@ class Api {
             credentials: 'include',
             headers: this._headers,
         })
-        .then((res) => this._testStatus(res));
+            .then((res) => this._testStatus(res));
     };
 
     setUser = (name, email) => {
@@ -24,7 +24,7 @@ class Api {
                 email: email,
             })
         })
-        .then((res) => this._testStatus(res));
+            .then((res) => this._testStatus(res));
     }
 
     like(movie) {
@@ -46,7 +46,7 @@ class Api {
                 movieId: movie.id
             })
         })
-        .then((res) => this._testStatus(res));
+            .then((res) => this._testStatus(res));
     };
 
     getLikes() {
@@ -54,17 +54,17 @@ class Api {
             credentials: 'include',
             headers: this._headers,
         })
-        .then((res) => this._testStatus(res));
+            .then((res) => this._testStatus(res));
     };
 
 
     deleteMovie(id) {
-        return fetch(`${this._baseUrl}/movies/${id}`, { 
-          method: 'DELETE',
-          credentials:'include',
-          headers: this._headers,
+        return fetch(`${this._baseUrl}/movies/${id}`, {
+            method: 'DELETE',
+            credentials: 'include',
+            headers: this._headers,
         })
-        .then((res) => this._testStatus(res));
+            .then((res) => this._testStatus(res));
     };
 
 

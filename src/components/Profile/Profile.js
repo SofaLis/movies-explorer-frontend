@@ -26,7 +26,7 @@ export default function Profile(props) {
             setIsValue(true)
         }
     }, [currentUser.email, currentUser.name, setIsValue, validationForm.isValues.email, validationForm.isValues.name])
-    
+
     const buttonDis = props.isAddForm || isValue ? true : false;
     console.log(isValue, buttonDis)
 
@@ -56,13 +56,13 @@ export default function Profile(props) {
                         </span>
                     </div>
                     <div className="profile__button-container">
-                    <button type="submit" disabled={!buttonDis}
-                        className={`${!props.buttonDis ? "button profile__button_submit profile__button_off-active" : "button profile__button_submit"}`} >
-                        Редактировать
-                    </button>
-                    <span className={`${props.isErr !== '' ? "profile_err profile_err_active" : "profile_err"}`}>
-                        {props.isErr.text}
-                    </span>
+                        <button type="submit" disabled={!buttonDis}
+                            className={`${!props.buttonDis ? "button profile__button_submit profile__button_off-active" : "button profile__button_submit"}`} >
+                            Редактировать
+                        </button>
+                        <span className={`${props.isErr !== '' ? "profile_err profile_err_active" : "profile_err"}`}>
+                            {props.isErr.text}
+                        </span>
                     </div>
                     <button type="button" className="button profile__button_logoff" onClick={props.onClick}>
                         Выйти из аккаунта

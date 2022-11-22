@@ -13,13 +13,13 @@ export default function Register(props) {
 
     const buttonDis = props.isAddForm ? !props.isAddForm : validationForm.isValidity;
 
-  return (
-      <Authorization formName="register" title="Добро пожаловать!" buttonText="Регистрация" 
-      text="Уже зарегистрированы?" linkText="Войти" link="/signin" nameAuth="register"
-      onSubmit={handleSubmit} handleChangeName={validationForm.handleChange} handleChangeEmail={validationForm.handleChange}
-      handleChangePassword={validationForm.handleChange} isErr={props.isErr} setIsErr={props.setIsErr}
-      name={validationForm.isValues.name} email={validationForm.isValues.email} password={validationForm.isValues.password}
-      isErrName={validationForm.isErr.name} isErrEmail={validationForm.isErr.email} 
-      isErrPassword={validationForm.isErr.password} buttonDis={buttonDis} />
-  )
+    return (
+        <Authorization formName="register" title="Добро пожаловать!" buttonText="Регистрация"
+            text="Уже зарегистрированы?" linkText="Войти" link="/signin" nameAuth="register"
+            onSubmit={handleSubmit} handleChangeName={validationForm.handleChange} handleChangeEmail={validationForm.handleChange}
+            handleChangePassword={validationForm.handleChange} isErr={props.isErr} setIsErr={props.setIsErr}
+            name={validationForm.isValues.name} email={validationForm.isValues.email} password={validationForm.isValues.password}
+            isErrName={validationForm.isErr.name} isErrEmail={validationForm.isErr.email}
+            isErrPassword={validationForm.isErr.password} buttonDis={buttonDis} />
+    )
 }
