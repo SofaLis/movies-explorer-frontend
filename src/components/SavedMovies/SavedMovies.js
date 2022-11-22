@@ -15,7 +15,6 @@ export default function SavedMovies(props) {
 
     const [isErr, setIsErr] = React.useState(false);
     const [isSelectedShortMovie, setIsSelectedIsShortMovie] = React.useState(false);
-    const [isSeeMovie, setIsSeeMovie] = React.useState([]);
 
     React.useEffect(() => {
         setIsSelectedIsShortMovie(JSON.parse(localStorage.getItem('isCheckSave')) || false);
@@ -23,22 +22,23 @@ export default function SavedMovies(props) {
     }, []);
 
     React.useEffect(() => {
-        setIsSeeMovie(props.moviesSave);
+        props.setIsSeeMovie(props.moviesSave);
         props.setIsBigErr({ text: '' });
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.moviesSave]);
+    }, []);
 
     function searchFromMovies() {
         props.setIsBigErr({ text: '' })
         const filter = props.isMovieSearch.filter((movie) => movie.nameRU.toLowerCase().includes(props.isSearch.toLowerCase()));
-        if (filter.length === 0)  {
+        if (filter.length === 0) {
             props.setIsBigErr({ text: ERR_NOT_MOV })
         } else {
-            setIsSeeMovie(filter)
-            props.setMovieSearch(filter)
+            props.setIsSeeMovie(filter)
+            props.setMovieSearch(filter);
         }
         localStorage.setItem('isCheckSave', JSON.stringify(isSelectedShortMovie))
         localStorage.setItem("isSearch", props.isSearch);
+        console.log(props.isMovieSearch)
         props.setIsLoading(false);
     };
 
@@ -53,7 +53,7 @@ export default function SavedMovies(props) {
         localStorage.setItem('isCheckSave', JSON.stringify(!isSelectedShortMovie));
     }
 
-    const seeMovies = isSelectedShortMovie ? isSeeMovie.filter((item) => item.duration < 40) : isSeeMovie;
+    const seeMovies = isSelectedShortMovie ? props.isSeeMovie.filter((item) => item.duration < 40) : props.isSeeMovie;
 
     function handleOnChange(e) {
         props.setIsSearch(e.target.value)

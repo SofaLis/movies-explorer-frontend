@@ -30,6 +30,7 @@ function App() {
   const [isMovieSearch, setIsMovieSearch] = React.useState([]);
   const [isMovieSave, setIsMovieSave] = React.useState([]);
   const [isMovieSaveSearch, setIsMovieSaveSearch] = React.useState([]);
+  const [isSeeMovie, setIsSeeMovie] = React.useState([]);
   //Загрузка для плеодера
   const [isLoading, setIsLoading] = React.useState(true);
   //не уверена, что заработает, но должно
@@ -51,7 +52,7 @@ function App() {
     auth.getContent()
       .then((user) => {
         setIsLoggedIn(true);
-        localStorage.setItem('location', location.pathname)
+        localStorage.setItem('location', sessionStorage)
         history.push(location);
         setCurrentUser(user);
       })
@@ -157,6 +158,12 @@ function App() {
     searchFromMovies()
   }, [ isMovie ]);
 
+  React.useEffect(() => {
+    setIsSeeMovie(isSeeMovie)
+    setIsMovieSave(isMovieSave)
+  }, [ isMovieSave ]);
+
+
   function getLikes() {
     api.getLikes()
       .then((res) => {
@@ -225,8 +232,10 @@ function App() {
     api.deleteMovie(id)
       .then((res) => {
         const newMovies = isMovieSave.filter((movie) => movie._id !== res._id);
-        const newMoviesSerch = isMovieSaveSearch.filter((movie) => movie._id !== res._id);
-        setIsMovieSaveSearch(newMoviesSerch)
+        const newMoviesSee = isSeeMovie.filter((movie) => movie._id !== res._id);
+       const newMoviesSearch = isMovieSaveSearch.filter((movie) => movie._id !== res._id);
+        setIsMovieSaveSearch(newMoviesSearch)
+        setIsSeeMovie(newMoviesSee)
         setIsMovieSave(newMovies)
       })
       .catch((err, res) => {
@@ -254,11 +263,12 @@ function App() {
             isAddForm={isAddForm} />
 
           <ProtectedRoute path="/saved-movies" component={SavedMovies} isLoggedIn={isLoggedIn}
-            moviesSave={isMovieSave} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
-            isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch}
-            isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMovies={setIsMovieSave} checkId={checkId}
-            setIsLoading={setIsLoading} isLike={checkLikeMov} isMovieSearch={isMovieSaveSearch}
-            setMovieSearch={setIsMovieSaveSearch} currentUser={currentUser} />
+            onCardLike={handleCardLike} onCardDislike={handleCardDislike} checkId={checkId}
+            isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} setIsLoading={setIsLoading}
+            isBigErr={isBigErr} setIsBigErr={setIsBigErr} isLike={checkLikeMov}
+            setMovies={setIsMovieSave}  moviesSave={isMovieSave}
+            isMovieSearch={isMovieSaveSearch} setMovieSearch={setIsMovieSaveSearch}
+            setIsSeeMovie={setIsSeeMovie} isSeeMovie={isSeeMovie} />
 
           <Route path="/signup">
             <Register onRegister={handleRegister} isErr={isErrAuth} setIsErr={setIsErrAuth} isAddForm={isAddForm} />
