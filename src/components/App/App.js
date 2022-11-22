@@ -74,10 +74,6 @@ function App() {
       })
   }, []);
 
-  React.useEffect(() => {
-    setIsMovieSave(localStorage.getItem("moviesSave") || []);
-  }, []);
-
   function handleLogIn(email, password) {
     setIsAddForm(true)
     auth.authorize(email, password)
@@ -105,9 +101,6 @@ function App() {
     auth.register(name, email, password)
       .then((res) => {
         handleLogIn(email, password)
-        setIsLoggedIn(true);
-        history.push('/movies');
-        setCurrentUser(res);
         setIsAddForm(false)
         setIsErrAuth({ text: TEXT_OK_REG });
       })
@@ -160,9 +153,7 @@ function App() {
   // useEffects
 
   React.useEffect(() => {
-    if (isLoggedIn) {
       getLikes()
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
@@ -182,7 +173,7 @@ function App() {
         setIsMovieSave(res.filter((movie) => movie.owner === currentUser._id))
         setIsMovieSaveSearch(res.filter((movie) => movie.owner === currentUser._id))
         setIsLoading(false)
-        localStorage.setItem("moviesSave", JSON.stringify(isMovieSave));
+        // localStorage.setItem("moviesSave", JSON.stringify(isMovieSave));
       })
       .catch(() => {
         setIsBigErr({ text: ERR500 })
@@ -222,7 +213,7 @@ function App() {
     let item = isMovie;
     const filter = item.filter((movie) => movie.nameRU.toLowerCase().includes(isSearch.toLowerCase()));
     filter.length === 0 ? setIsBigErr({ text: ERR_NOT_MOV }) : setIsMovieSearch(filter);
-    localStorage.setItem("moviesSearch", JSON.stringify(filter));
+    localStorage.setItem('filtermovies', JSON.stringify(filter));
     localStorage.setItem("isSearch", isSearch);
   };
 
@@ -234,7 +225,6 @@ function App() {
     api.like(movie)
       .then((res) => {
         setIsMovieSave([res, ...isMovieSave]);
-        localStorage.setItem("moviesSave", JSON.stringify(isMovieSave));
       })
       .catch((err) => console.log(err));
   }
@@ -275,7 +265,7 @@ function App() {
             isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch}
             isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMovies={setIsMovieSave} checkId={checkId}
             setIsLoading={setIsLoading} isLike={checkLikeMov} isMovieSearch={isMovieSaveSearch}
-            setIsMovieSearch={setIsMovieSaveSearch} currentUser={currentUser} />
+            setMovieSearch={setIsMovieSaveSearch} currentUser={currentUser} />
 
           <Route path="/signup">
             <Register onRegister={handleRegister} isErr={isErrAuth} setIsErr={setIsErrAuth} isAddForm={isAddForm} />

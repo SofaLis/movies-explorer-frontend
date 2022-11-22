@@ -24,6 +24,7 @@ export default function SavedMovies(props) {
     React.useEffect(() => {
         setIsSeeMovie(props.movies);
         props.setIsBigErr({ text: '' });
+        props.setMovieSearch(props.movies)
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.movies, props.currentUser]);
 
