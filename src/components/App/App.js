@@ -172,7 +172,6 @@ function App() {
       apiMov.getMovies()
         .then((res) => {
           localStorage.setItem("moviesApi", JSON.stringify(res));
-          localStorage.setItem("movies", JSON.stringify(res));
         })
         .catch((err) => {
           if (err === 401) {
