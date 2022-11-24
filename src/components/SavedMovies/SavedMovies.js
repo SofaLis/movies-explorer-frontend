@@ -29,7 +29,7 @@ export default function SavedMovies(props) {
 
     function searchFromMovies() {
         props.setIsBigErr({ text: '' })
-        const filter = props.isMovieSearch.filter((movie) => movie.nameRU.toLowerCase().includes(props.isSearch.toLowerCase()));
+        const filter = props.moviesSave.filter((movie) => movie.nameRU.toLowerCase().includes(props.isSearch.toLowerCase()));
         if (filter.length === 0) {
             props.setIsBigErr({ text: ERR_NOT_MOV })
         } else {
@@ -59,7 +59,6 @@ export default function SavedMovies(props) {
         props.setIsSearch(e.target.value)
         setIsErr(false);
     }
-
 
     return (
         <>

@@ -64,7 +64,7 @@ function App() {
 
   React.useEffect(() => {
     Promise.all([
-      api.getUserInfo() ])
+      api.getUserInfo()])
       .then(([users, res]) => {
         setCurrentUser(users);
       })
@@ -154,14 +154,38 @@ function App() {
   }, [currentUser]);
 
   React.useEffect(() => {
-    setIsMovieSearch(JSON.parse(localStorage.getItem("movies")) || [])
-    searchFromMovies()
-  }, [ isMovie ]);
+    getMovies()
+  }, [isMovieSave]);
 
   React.useEffect(() => {
-    setIsSeeMovie(isSeeMovie)
+    setIsMovie(isMovie)
+    searchFromMovies()
+  }, [isMovie, isMovieSave]);
+
+  React.useEffect(() => {
+    setIsSeeMovie(isMovieSaveSearch)
     setIsMovieSave(isMovieSave)
-  }, [ isMovieSave ]);
+  }, [isMovieSave]);
+
+  React.useEffect(() => {
+    if (!localStorage.getItem("moviesApi")) {
+      apiMov.getMovies()
+        .then((res) => {
+          localStorage.setItem("moviesApi", JSON.stringify(res));
+          localStorage.setItem("movies", JSON.stringify(res));
+        })
+        .catch((err) => {
+          if (err === 401) {
+            setIsBigErr({ text: START_MOV })
+          } else {
+            setIsBigErr({ text: ERR500 });
+          }
+        })
+    } else {
+      setIsMovie(JSON.parse(localStorage.getItem("moviesApi")))
+      setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
+    }
+  }, [isLoggedIn]);
 
 
   function getLikes() {
@@ -185,23 +209,13 @@ function App() {
   // function
 
   function getMovies() {
-    apiMov.getMovies()
-      .then((res) => {
-        const movie = res.map((movie) => {
-          movie.isLike = checkLikeMov(movie.id);
-          return movie;
-        });
-        setIsMovie(movie)
-        setIsMovieSearch(JSON.parse(localStorage.getItem("movies")) || [])
-        setIsLoading(false)
-      })
-      .catch((err) => {
-        if (err === 401) {
-          setIsBigErr({ text: START_MOV })
-        } else {
-          setIsBigErr({ text: ERR500 });
-        }
-      })
+    const movie = isMovie.map((movie) => {
+      movie.isLike = checkLikeMov(movie.id);
+      return movie;
+    });
+    setIsMovie(movie)
+    setIsMovieSearch(JSON.parse(localStorage.getItem("movies")) || [])
+    setIsLoading(false)
   }
 
 
@@ -233,7 +247,7 @@ function App() {
       .then((res) => {
         const newMovies = isMovieSave.filter((movie) => movie._id !== res._id);
         const newMoviesSee = isSeeMovie.filter((movie) => movie._id !== res._id);
-       const newMoviesSearch = isMovieSaveSearch.filter((movie) => movie._id !== res._id);
+        const newMoviesSearch = isMovieSaveSearch.filter((movie) => movie._id !== res._id);
         setIsMovieSaveSearch(newMoviesSearch)
         setIsSeeMovie(newMoviesSee)
         setIsMovieSave(newMovies)
@@ -256,7 +270,7 @@ function App() {
             movies={isMovieSearch} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
             isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} onClick={handleSearchMoviesClick}
             isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMoviesSearch={setIsMovieSearch} checkId={checkId}
-            setIsLoading={setIsLoading} isLike={checkLikeMov} isMovieSave ={isMovieSave} />
+            setIsLoading={setIsLoading} isLike={checkLikeMov} isMovieSave={isMovieSave} />
 
           <ProtectedRoute path="/profile" component={Profile} isLoggedIn={isLoggedIn}
             onRegister={handleSetUser} onClick={handleLogOff} isErr={isErrAuth} setIsErr={setIsErrAuth}
@@ -266,7 +280,7 @@ function App() {
             onCardLike={handleCardLike} onCardDislike={handleCardDislike} checkId={checkId}
             isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} setIsLoading={setIsLoading}
             isBigErr={isBigErr} setIsBigErr={setIsBigErr} isLike={checkLikeMov}
-            setMovies={setIsMovieSave}  moviesSave={isMovieSave}
+            setMovies={setIsMovieSave} moviesSave={isMovieSave}
             isMovieSearch={isMovieSaveSearch} setMovieSearch={setIsMovieSaveSearch}
             setIsSeeMovie={setIsSeeMovie} isSeeMovie={isSeeMovie} />
 
