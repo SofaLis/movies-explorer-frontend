@@ -24,6 +24,7 @@ export default function SavedMovies(props) {
     React.useEffect(() => {
         props.setIsSeeMovie(props.moviesSave);
         props.setIsBigErr({ text: '' });
+        props.setIsSearch("");
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -37,8 +38,6 @@ export default function SavedMovies(props) {
             props.setMovieSearch(filter);
         }
         localStorage.setItem('isCheckSave', JSON.stringify(isSelectedShortMovie))
-        localStorage.setItem("isSearch", props.isSearch);
-        console.log(props.isMovieSearch)
         props.setIsLoading(false);
     };
 

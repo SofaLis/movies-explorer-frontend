@@ -16,6 +16,7 @@ import * as auth from '../../utils/auth';
 import api from '../../utils/MainApi.js';
 import apiMov from '../../utils/MoviesApi';
 import ProtectedRoute from '../../utils/ProtectedRoute';
+import ProtectedRouteAuth from '../../utils/ProtectedRouteAuth';
 
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
@@ -35,6 +36,7 @@ function App() {
   const [isLoading, setIsLoading] = React.useState(true);
   //не уверена, что заработает, но должно
   const [isSearch, setIsSearch] = React.useState('');
+  const [isSearchSave, setIsSearchSave] = React.useState('');
   const [isBigErr, setIsBigErr] = React.useState({ text: '' });
   const [isErrAuth, setIsErrAuth] = React.useState({ text: '' });
   const [isAddForm, setIsAddForm] = React.useState(false);
@@ -58,7 +60,11 @@ function App() {
       })
       .catch((err) => {
         setIsLoggedIn(false);
-        handleLogOff()
+        localStorage.clear();
+        history.push('/');
+        setCurrentUser({});
+        setIsMovie([])
+        setIsMovieSave([])
       });
   }, [history]);
 
@@ -69,6 +75,9 @@ function App() {
         setCurrentUser(users);
       })
       .catch((err) => {
+        if (err === 401) {
+          handleLogOff()
+        }
       })
   }, []);
 
@@ -126,6 +135,14 @@ function App() {
         } else {
           setIsErrAuth({ text: ERR500 });
         }
+        if (err === 401) {
+          setIsLoggedIn(false);
+          localStorage.clear();
+          history.push('/');
+          setCurrentUser({});
+          setIsMovie([])
+          setIsMovieSave([])
+        }
       })
   }
 
@@ -141,6 +158,12 @@ function App() {
       })
       .catch((err) => {
         setIsErrAuth({ text: ERR500 })
+        setIsLoggedIn(false);
+        localStorage.clear();
+        history.push('/');
+        setCurrentUser({});
+        setIsMovie([])
+        setIsMovieSave([])
       });
   }
 
@@ -149,7 +172,6 @@ function App() {
 
   React.useEffect(() => {
     getLikes()
-    console.log(localStorage)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
@@ -184,7 +206,7 @@ function App() {
       setIsMovie(JSON.parse(localStorage.getItem("moviesApi")))
       setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, ]);
 
 
   function getLikes() {
@@ -194,7 +216,7 @@ function App() {
         setIsMovieSaveSearch(res)
         setIsLoading(false)
       })
-      .catch(() => {
+      .catch((err) => {
         setIsBigErr({ text: ERR500 });
       })
   }
@@ -238,7 +260,17 @@ function App() {
         setIsMovieSave([res, ...isMovieSave]);
         setIsMovieSaveSearch([res, ...isMovieSaveSearch]);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err)
+        if (err === 401) {
+          setIsLoggedIn(false);
+          localStorage.clear();
+          history.push('/');
+          setCurrentUser({});
+          setIsMovie([])
+          setIsMovieSave([])
+        }
+      })
   }
 
   function handleCardDislike(id) {
@@ -252,7 +284,14 @@ function App() {
         setIsMovieSave(newMovies)
       })
       .catch((err, res) => {
-        console.log(err)
+        if (err === 401) {
+          setIsLoggedIn(false);
+          localStorage.clear();
+          history.push('/');
+          setCurrentUser({});
+          setIsMovie([])
+          setIsMovieSave([])
+        }
       });
   }
 
@@ -277,19 +316,17 @@ function App() {
 
           <ProtectedRoute path="/saved-movies" component={SavedMovies} isLoggedIn={isLoggedIn}
             onCardLike={handleCardLike} onCardDislike={handleCardDislike} checkId={checkId}
-            isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} setIsLoading={setIsLoading}
+            isLoading={isLoading} isSearch={isSearchSave} setIsSearch={setIsSearchSave} setIsLoading={setIsLoading}
             isBigErr={isBigErr} setIsBigErr={setIsBigErr} isLike={checkLikeMov}
             setMovies={setIsMovieSave} moviesSave={isMovieSave}
             isMovieSearch={isMovieSaveSearch} setMovieSearch={setIsMovieSaveSearch}
             setIsSeeMovie={setIsSeeMovie} isSeeMovie={isSeeMovie} />
 
-          <Route path="/signup">
-            <Register onRegister={handleRegister} isErr={isErrAuth} setIsErr={setIsErrAuth} isAddForm={isAddForm} />
-          </Route>
+          <ProtectedRouteAuth path="/signup" component={Register} onRegister={handleRegister}
+            isErr={isErrAuth} setIsErr={setIsErrAuth} isAddForm={isAddForm} isLoggedIn={isLoggedIn} />
 
-          <Route path="/signin">
-            <Login onRegister={handleLogIn} isErr={isErrAuth} setIsErr={setIsErrAuth} isAddForm={isAddForm} />
-          </Route>
+          <ProtectedRouteAuth path="/signin" component={Login} onRegister={handleLogIn} isErr={isErrAuth}
+            setIsErr={setIsErrAuth} isAddForm={isAddForm} isLoggedIn={isLoggedIn} />
 
           <ProtectedRoute path="*" component={NotFound} isLoggedIn={isLoggedIn} />
 
