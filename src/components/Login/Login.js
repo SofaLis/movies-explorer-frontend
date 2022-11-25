@@ -3,6 +3,8 @@ import './Login.css';
 import Authorization from '../Authorization/Authorization';
 import useValidation from "../../utils/validations";
 
+import { LINK_SIGNUP } from '../../utils/constant';
+
 export default function Login(props) {
     const validationForm = useValidation()
 
@@ -15,7 +17,7 @@ export default function Login(props) {
 
     return (
         <Authorization formName="login" title="Рады видеть!" buttonText="Войти"
-            text="Ещё не зарегистрированы?" linkText="Регистрация" link="/signup"
+            text="Ещё не зарегистрированы?" linkText="Регистрация" link={LINK_SIGNUP}
             onSubmit={handleSubmit} handleChangeName={validationForm.handleChange} handleChangeEmail={validationForm.handleChange}
             handleChangePassword={validationForm.handleChange} isErr={props.isErr} setIsErr={props.setIsErr}
             name={validationForm.isValues.name} email={validationForm.isValues.email} password={validationForm.isValues.password}

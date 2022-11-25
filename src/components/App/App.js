@@ -20,7 +20,9 @@ import ProtectedRouteAuth from '../../utils/ProtectedRouteAuth';
 
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 
-import { TEXT_OK, TEXT_OK_REG, TEXT_OK_LOG, ERR500, ERR409, ERR400, ERR_NOT_MOV, START_MOV } from '../../utils/constant';
+import {
+  TEXT_OK, TEXT_OK_REG, TEXT_OK_LOG, ERR500, ERR409, ERR400, ERR_NOT_MOV, START_MOV,
+  LINK_SIGNUP, LINK_SIGNIN, LINK_MAIN, LINK_MOVIES, LINK_MOVIES_SAVE, LINK_PROFILE} from '../../utils/constant';
 
 function App() {
   //проверка на авторизацию
@@ -206,7 +208,7 @@ function App() {
       setIsMovie(JSON.parse(localStorage.getItem("moviesApi")))
       setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
     }
-  }, [isLoggedIn, ]);
+  }, [isLoggedIn,]);
 
 
   function getLikes() {
@@ -300,21 +302,21 @@ function App() {
       <div className="page">
         <Switch>
 
-          <Route exact path="/">
+          <Route exact path={LINK_MAIN}>
             <Main isLoggedIn={isLoggedIn} />
           </Route>
 
-          <ProtectedRoute path="/movies" component={Movies} isLoggedIn={isLoggedIn}
+          <ProtectedRoute path={LINK_MOVIES} component={Movies} isLoggedIn={isLoggedIn}
             movies={isMovieSearch} onCardLike={handleCardLike} onCardDislike={handleCardDislike}
             isLoading={isLoading} isSearch={isSearch} setIsSearch={setIsSearch} onClick={handleSearchMoviesClick}
             isBigErr={isBigErr} setIsBigErr={setIsBigErr} setMoviesSearch={setIsMovieSearch} checkId={checkId}
             setIsLoading={setIsLoading} isLike={checkLikeMov} isMovieSave={isMovieSave} />
 
-          <ProtectedRoute path="/profile" component={Profile} isLoggedIn={isLoggedIn}
+          <ProtectedRoute path={LINK_PROFILE} component={Profile} isLoggedIn={isLoggedIn}
             onRegister={handleSetUser} onClick={handleLogOff} isErr={isErrAuth} setIsErr={setIsErrAuth}
             isAddForm={isAddForm} />
 
-          <ProtectedRoute path="/saved-movies" component={SavedMovies} isLoggedIn={isLoggedIn}
+          <ProtectedRoute path={LINK_MOVIES_SAVE} component={SavedMovies} isLoggedIn={isLoggedIn}
             onCardLike={handleCardLike} onCardDislike={handleCardDislike} checkId={checkId}
             isLoading={isLoading} isSearch={isSearchSave} setIsSearch={setIsSearchSave} setIsLoading={setIsLoading}
             isBigErr={isBigErr} setIsBigErr={setIsBigErr} isLike={checkLikeMov}
@@ -322,10 +324,10 @@ function App() {
             isMovieSearch={isMovieSaveSearch} setMovieSearch={setIsMovieSaveSearch}
             setIsSeeMovie={setIsSeeMovie} isSeeMovie={isSeeMovie} />
 
-          <ProtectedRouteAuth path="/signup" component={Register} onRegister={handleRegister}
+          <ProtectedRouteAuth path={LINK_SIGNUP} component={Register} onRegister={handleRegister}
             isErr={isErrAuth} setIsErr={setIsErrAuth} isAddForm={isAddForm} isLoggedIn={isLoggedIn} />
 
-          <ProtectedRouteAuth path="/signin" component={Login} onRegister={handleLogIn} isErr={isErrAuth}
+          <ProtectedRouteAuth path={LINK_SIGNIN} component={Login} onRegister={handleLogIn} isErr={isErrAuth}
             setIsErr={setIsErrAuth} isAddForm={isAddForm} isLoggedIn={isLoggedIn} />
 
           <ProtectedRoute path="*" component={NotFound} isLoggedIn={isLoggedIn} />

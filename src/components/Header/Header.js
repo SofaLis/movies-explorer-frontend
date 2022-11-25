@@ -6,6 +6,8 @@ import HeaderLogOff from '../HeaderLogOff/HeaderLogOff';
 import HeaderLogIn from '../HeaderLogIn/HeaderLogIn';
 import Navigation from '../Navigation/Navigation';
 
+import { LINK_MAIN } from '../../utils/constant';
+
 export default function Header(props) {
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -20,7 +22,7 @@ export default function Header(props) {
     return (
         <header className="header">
             <div className="header__container">
-                <Link className="link" to="/">
+                <Link className="link" to={LINK_MAIN}>
                     <img src={logo} alt="Логотип" className="header__logo" />
                 </Link>
                 {props.isLoggedIn ? <HeaderLogIn onClick={handleClickOpen} /> : <HeaderLogOff />}

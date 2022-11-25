@@ -2,6 +2,10 @@ import React from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
+import { WIDTH_DISPLAY_BIG, WIDTH_DISPLAY_MEDIUM, WIDTH_DISPLAY_SMALL,
+    COUNT_CARD_BIG, COUNT_CARD_MEDIUM, COUNT_CARD_SMALL, COUNT_CARD_VERY_SMALL,
+    CARD_CLICK_BIG, CARD_CLICK_MEDIUM, CARD_CLICK_SMALL, TIMEOUT } from '../../utils/constant';
+
 export default function MoviesCardList(props) {
     // Ширина 1280px — 12 карточек по 3 в ряд. Кнопка «Ещё» загружает по 3 карточки.
     // Ширина 768px — 8 карточек по 2 в ряд. Кнопка «Ещё» загружает по 2 карточки.
@@ -22,24 +26,24 @@ export default function MoviesCardList(props) {
     }
 
     function handleCheckSize() {
-        if (isWindowSize.width >= 2100) {
-            setIsMovieCount(6)
-            setIsMovieClick(7)
-        } else if (isWindowSize.width < 2100 && isWindowSize.width > 989) {
-            setIsMovieCount(11)
-            setIsMovieClick(3)
-        } else if (isWindowSize.width <= 989 && isWindowSize.width > 665) {
-            setIsMovieCount(7)
-            setIsMovieClick(2)
+        if (isWindowSize.width >= WIDTH_DISPLAY_BIG) {
+            setIsMovieCount(COUNT_CARD_BIG)
+            setIsMovieClick(CARD_CLICK_BIG)
+        } else if (isWindowSize.width < WIDTH_DISPLAY_BIG && isWindowSize.width > WIDTH_DISPLAY_MEDIUM) {
+            setIsMovieCount(COUNT_CARD_MEDIUM)
+            setIsMovieClick(CARD_CLICK_MEDIUM)
+        } else if (isWindowSize.width <= WIDTH_DISPLAY_MEDIUM && isWindowSize.width > WIDTH_DISPLAY_SMALL) {
+            setIsMovieCount(COUNT_CARD_SMALL)
+            setIsMovieClick(CARD_CLICK_SMALL)
         } else {
-            setIsMovieCount(4)
-            setIsMovieClick(2)
+            setIsMovieCount(COUNT_CARD_VERY_SMALL)
+            setIsMovieClick(CARD_CLICK_SMALL)
         }
     }
 
     React.useEffect(() => {
         function handleTimeout() {
-            setTimeout(handleResize, 100);
+            setTimeout(handleResize, TIMEOUT);
         }
         handleResize()
         window.addEventListener("resize", handleTimeout);

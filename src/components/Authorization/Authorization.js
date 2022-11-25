@@ -23,7 +23,7 @@ export default function Authorization(props) {
                             <div className="authorizatio__input-container">
                                 <span className="authorizatio__caption">Имя</span>
                                 <input className={`${props.isErrName ? "authorizatio__input authorizatio__input_active" : "authorizatio__input"}`}
-                                    type="text" id="name" name="name"
+                                    type="text" id="name" name="name" 
                                     required minLength="2" maxLength="40" onChange={props.handleChangeName} value={props.name} />
                                 <span className={`${props.isErrName ? "authorizatio_err authorizatio_err_active" : "authorizatio_err"}`}>
                                     {props.isErrName}

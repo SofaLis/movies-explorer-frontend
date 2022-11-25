@@ -3,11 +3,15 @@ import React from 'react';
 import './MoviesCard.css';
 import { useLocation } from 'react-router-dom';
 
+import { HOUR } from '../../utils/constant';
+
+import {LINK_MOVIES_SAVE, LINK_API} from '../../utils/constant';
+
 export default function MoviesCard(props) {
 
     const location = useLocation();
-    const saveMovRoot = location.pathname === '/saved-movies';
-    const image = !saveMovRoot ? `https://api.nomoreparties.co${props.movie.image.url}` : `${props.movie.image}`
+    const saveMovRoot = location.pathname === LINK_MOVIES_SAVE;
+    const image = !saveMovRoot ? `${LINK_API}${props.movie.image.url}` : `${props.movie.image}`
 
     function handleLikeClick() {
         if (!props.movie.isLike) {
@@ -40,7 +44,7 @@ export default function MoviesCard(props) {
                     <button className="card__btn card__btn_delete" type="button" onClick={handleDeleteClick}></button>
                 }
             </div>
-            <p className='card__time'>{`${Math.floor(props.movie.duration / 60)}ч ${props.movie.duration % 60}м `}</p>
+            <p className='card__time'>{`${Math.floor(props.movie.duration / {HOUR})}ч ${props.movie.duration % {HOUR}}м `}</p>
         </li>
     );
 }
