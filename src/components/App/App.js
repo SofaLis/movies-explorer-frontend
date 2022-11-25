@@ -22,7 +22,8 @@ import CurrentUserContext from '../../contexts/CurrentUserContext';
 
 import {
   TEXT_OK, TEXT_OK_REG, TEXT_OK_LOG, ERR500, ERR409, ERR400, ERR_NOT_MOV, START_MOV,
-  LINK_SIGNUP, LINK_SIGNIN, LINK_MAIN, LINK_MOVIES, LINK_MOVIES_SAVE, LINK_PROFILE} from '../../utils/constant';
+  LINK_SIGNUP, LINK_SIGNIN, LINK_MAIN, LINK_MOVIES, LINK_MOVIES_SAVE, LINK_PROFILE
+} from '../../utils/constant';
 
 function App() {
   //проверка на авторизацию
@@ -192,23 +193,28 @@ function App() {
   }, [isMovieSave]);
 
   React.useEffect(() => {
-    if (!localStorage.getItem("moviesApi")) {
-      apiMov.getMovies()
-        .then((res) => {
-          localStorage.setItem("moviesApi", JSON.stringify(res));
-        })
-        .catch((err) => {
-          if (err === 401) {
-            setIsBigErr({ text: START_MOV })
-          } else {
-            setIsBigErr({ text: ERR500 });
-          }
-        })
+    if (isLoggedIn) {
+      if (!localStorage.getItem("moviesApi")) {
+        apiMov.getMovies()
+          .then((res) => {
+            localStorage.setItem("moviesApi", JSON.stringify(res));
+          })
+          .catch((err) => {
+            if (err === 401) {
+              setIsBigErr({ text: START_MOV })
+            } else {
+              setIsBigErr({ text: ERR500 });
+            }
+          })
+      } else {
+        setIsMovie(JSON.parse(localStorage.getItem("moviesApi")))
+        setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
+      }
     } else {
-      setIsMovie(JSON.parse(localStorage.getItem("moviesApi")))
-      setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
+      localStorage.clear();
     }
-  }, [isLoggedIn,]);
+    console.log(localStorage)
+  }, [isLoggedIn]);
 
 
   function getLikes() {
