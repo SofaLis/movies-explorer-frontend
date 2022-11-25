@@ -43,7 +43,7 @@ export default function Movies(props) {
     }
 
     //Это мы изменяем списко фильмов в завимимости от того, нажали ли на чекбоксю
-    const seeMovies = isSelectedShortMovie ? props.movies.filter((item) => item.duration < {DURATION_SHORT}) : props.movies;
+    const seeMovies = isSelectedShortMovie ? props.movies.filter((item) => item.duration < DURATION_SHORT) : props.movies;
 
     function handleOnChange(e) {
         props.setIsSearch(e.target.value)

@@ -44,7 +44,7 @@ export default function MoviesCard(props) {
                     <button className="card__btn card__btn_delete" type="button" onClick={handleDeleteClick}></button>
                 }
             </div>
-            <p className='card__time'>{`${Math.floor(props.movie.duration / {HOUR})}ч ${props.movie.duration % {HOUR}}м `}</p>
+            <p className='card__time'>{`${Math.floor(props.movie.duration / HOUR)}ч ${props.movie.duration % HOUR}м `}</p>
         </li>
     );
 }
