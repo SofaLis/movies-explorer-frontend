@@ -193,7 +193,6 @@ function App() {
   }, [isMovieSave]);
 
   React.useEffect(() => {
-    if (isLoggedIn) {
       if (!localStorage.getItem("moviesApi")) {
         apiMov.getMovies()
           .then((res) => {
@@ -210,10 +209,7 @@ function App() {
         setIsMovie(JSON.parse(localStorage.getItem("moviesApi")))
         setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
       }
-    } else {
       localStorage.clear();
-    }
-    console.log(localStorage)
   }, [isLoggedIn]);
 
 
