@@ -181,17 +181,17 @@ function App() {
 
   React.useEffect(() => {
     getMovies()
-  }, [isMovieSave]);
+  }, [isMovieSave, currentUser]);
 
   React.useEffect(() => {
     setIsMovie(isMovie)
     setIsMovieSearch(isMovieSearch)
-  }, [isMovie, isMovieSave]);
+  }, [isMovie, isMovieSave, currentUser]);
 
   React.useEffect(() => {
     setIsSeeMovie(isMovieSaveSearch)
     setIsMovieSave(isMovieSave)
-  }, [isMovieSave]);
+  }, [isMovieSave, currentUser]);
 
   React.useEffect(() => {
     if (isLoggedIn) {
