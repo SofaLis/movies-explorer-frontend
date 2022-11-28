@@ -4,6 +4,8 @@ import img from '../../images/img.jpg'
 
 import MainBlock from '../MainBlock/MainBlock';
 
+import { LINK_GIT_ME } from '../../utils/constant';
+
 export default function AboutMe() {
     return (
         <MainBlock color={'white'} header={'Студент'} name={'me'}>
@@ -15,7 +17,7 @@ export default function AboutMe() {
                         там же поступила в СПБГУАП по специальности электронника и наноэлекронника.
                         Стараюсь совмещать получение высшего образования и освоение более интересной для меня профессии - веб разработка.
                     </p>
-                    <a className="link me__link" href="https://github.com/SofaLis"
+                    <a className="link me__link" href={LINK_GIT_ME}
                         target="_blank" rel="noreferrer">Github</a>
                 </div>
                 <img className="me__img" src={img} alt="Это я" />
