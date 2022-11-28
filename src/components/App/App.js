@@ -175,6 +175,7 @@ function App() {
 
   React.useEffect(() => {
     getLikes()
+    console.log(localStorage)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentUser]);
 
@@ -184,7 +185,7 @@ function App() {
 
   React.useEffect(() => {
     setIsMovie(isMovie)
-    searchFromMovies()
+    setIsMovieSearch(isMovieSearch)
   }, [isMovie, isMovieSave]);
 
   React.useEffect(() => {
@@ -193,10 +194,18 @@ function App() {
   }, [isMovieSave]);
 
   React.useEffect(() => {
+    if (isLoggedIn) {
       if (!localStorage.getItem("moviesApi")) {
         apiMov.getMovies()
           .then((res) => {
-            localStorage.setItem("moviesApi", JSON.stringify(res));
+            const movie = res.map((movie) => {
+              movie.isLike = checkLikeMov(movie.id);
+              return movie;
+            });
+            localStorage.setItem("moviesApi", JSON.stringify(movie));
+            localStorage.setItem("movies", JSON.stringify(movie));
+            setIsMovie(JSON.parse(localStorage.getItem("moviesApi")))
+            setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
           })
           .catch((err) => {
             if (err === 401) {
@@ -209,7 +218,8 @@ function App() {
         setIsMovie(JSON.parse(localStorage.getItem("moviesApi")))
         setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
       }
-      localStorage.clear();
+    }
+
   }, [isLoggedIn]);
 
 
@@ -238,7 +248,12 @@ function App() {
       movie.isLike = checkLikeMov(movie.id);
       return movie;
     });
+    const movieSerch = isMovieSearch.map((movie) => {
+      movie.isLike = checkLikeMov(movie.id);
+      return movie;
+    });
     setIsMovie(movie)
+    setIsMovieSearch(movieSerch)
     setIsMovieSearch(JSON.parse(localStorage.getItem("movies")) || [])
     setIsLoading(false)
   }
@@ -341,4 +356,3 @@ function App() {
 }
 
 export default App;
-
