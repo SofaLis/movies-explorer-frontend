@@ -181,7 +181,7 @@ function App() {
 
   React.useEffect(() => {
     getMovies()
-  }, [isMovieSave]);
+  }, [isMovieSave, currentUser]);
 
   React.useEffect(() => {
     setIsMovie(isMovie)
@@ -198,14 +198,9 @@ function App() {
       if (!localStorage.getItem("moviesApi")) {
         apiMov.getMovies()
           .then((res) => {
-            const movie = res.map((movie) => {
-              movie.isLike = checkLikeMov(movie.id);
-              return movie;
-            });
-            localStorage.setItem("moviesApi", JSON.stringify(movie));
-            localStorage.setItem("movies", JSON.stringify(movie));
+            localStorage.setItem("moviesApi", JSON.stringify(res));
             setIsMovie(JSON.parse(localStorage.getItem("moviesApi")))
-            setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
+            // setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
           })
           .catch((err) => {
             if (err === 401) {
@@ -219,7 +214,7 @@ function App() {
         setIsMovieSearch(JSON.parse(localStorage.getItem("movies")));
       }
     }
-
+    setIsMovieSearch(JSON.parse(localStorage.getItem("movies")) || []);
   }, [isLoggedIn]);
 
 
@@ -263,8 +258,12 @@ function App() {
     setIsBigErr({ text: '' })
     let item = isMovie;
     const filter = item.filter((movie) => movie.nameRU.toLowerCase().includes(isSearch.toLowerCase()));
-    filter.length === 0 ? setIsBigErr({ text: ERR_NOT_MOV }) : setIsMovieSearch(filter);
-    localStorage.setItem("movies", JSON.stringify(filter))
+    const movieSerch = filter.map((movie) => {
+      movie.isLike = checkLikeMov(movie.id);
+      return movie;
+    });
+    movieSerch.length === 0 ? setIsBigErr({ text: ERR_NOT_MOV }) : setIsMovieSearch(movieSerch);
+    localStorage.setItem("movies", JSON.stringify(movieSerch))
     setIsLoading(false)
   };
 

@@ -18,7 +18,7 @@ export default function Movies(props) {
     React.useEffect(() => {
         setIsSelectedIsShortMovie(JSON.parse(localStorage.getItem('isCheck')) || false);
         props.setIsSearch(localStorage.getItem("isSearch") || "");
-        // localStorage.setItem("movies", JSON.stringify(props.movies))
+        localStorage.setItem("movies", JSON.stringify(props.movies))
     }, [props.movies]);
 
 
