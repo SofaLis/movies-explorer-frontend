@@ -1,33 +1,27 @@
 import React from 'react';
 import './Register.css';
 import Authorization from '../Authorization/Authorization';
+import useValidation from "../../utils/validations";
+
+import { LINK_SIGNIN } from '../../utils/constant';
 
 export default function Register(props) {
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [name, setName] = React.useState('');
-
-    function handleChangeEmail(e) {
-        setEmail(e.target.value)
-    };
-
-    function handleChangePassword(e) {
-        setPassword(e.target.value)
-    };
-
-    function handleChangeName(e) {
-        setName(e.target.value)
-    };
+    const validationForm = useValidation()
 
     function handleSubmit(e) {
         e.preventDefault();
-        props.onRegister(name, email, password);
+        props.onRegister(validationForm.isValues.name, validationForm.isValues.email, validationForm.isValues.password);
     }
 
-  return (
-      <Authorization formName="register" title="Добро пожаловать!" buttonText="Регистрация" 
-      text="Уже зарегистрированы?" linkText="Войти" link="/signin" nameAuth="register"
-      onSubmit={handleSubmit} handleChangeName={handleChangeName} handleChangeEmail={handleChangeEmail}
-      handleChangePassword={handleChangePassword} />
-  )
+    const buttonDis = props.isAddForm ? !props.isAddForm : validationForm.isValidity;
+
+    return (
+        <Authorization formName="register" title="Добро пожаловать!" buttonText="Регистрация"
+            text="Уже зарегистрированы?" linkText="Войти" link={LINK_SIGNIN} nameAuth="register"
+            onSubmit={handleSubmit} handleChangeName={validationForm.handleChange} handleChangeEmail={validationForm.handleChange}
+            handleChangePassword={validationForm.handleChange} isErr={props.isErr} setIsErr={props.setIsErr}
+            name={validationForm.isValues.name} email={validationForm.isValues.email} password={validationForm.isValues.password}
+            isErrName={validationForm.isErr.name} isErrEmail={validationForm.isErr.email}
+            isErrPassword={validationForm.isErr.password} buttonDis={buttonDis} />
+    )
 }

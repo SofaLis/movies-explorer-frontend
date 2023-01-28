@@ -28,6 +28,23 @@
     height: 44px;
 }
 
+.search-form_err {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+    display: none;
+    padding-top: 6px;
+}
+
+.search-form_err_active {
+    display: flex;
+}
+
+.search-form__input_active {
+    color: #EE3465;
+}
+
 @media screen and (max-width: 450px) {
     .search-form__input {
         height: 44px;

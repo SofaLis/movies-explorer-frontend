@@ -92,8 +92,8 @@
     line-height: 17px;
 }
 
-.authorizatio__button:hover {
-    opacity: 0.5;
+.authorizatio__button_off-active {
+    opacity: 0.3;
 }
 
 .authorization__text {
@@ -114,6 +114,7 @@
 
 .authorizatio__input-container {
     margin: 0 0 24px;
+    width: 396px;
 }
 
 .authorizatio_err_active {
@@ -149,5 +150,10 @@
     .authorization__text {
         font-size: 12px;
         line-height: 15px;
+    }
+
+    .authorizatio__input-container {
+        margin: 0 0 24px;
+        width: 260px;
     }
 }
