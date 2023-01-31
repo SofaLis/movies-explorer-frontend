@@ -33,6 +33,6 @@ ___
 ### :computer: [Ссылка на репозиторий backend части](https://github.com/SofaLis/movies-explorer-api)
 ___
 
-Этот сайт настроен на то, что его будут открывать на собственном домене.
-### :computer: [Ссылка на репозиторий backend части](https://github.com/SofaLis/movies-explorer-api)
+### :computer: [Ссылка на сайт](http://plain-noise.surge.sh)
+Сайт не поддерживает сервер. 
 ___
